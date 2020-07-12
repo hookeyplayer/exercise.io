@@ -1,0 +1,66 @@
+############
+## 0707
+############
+import pandas as pd
+def test_run():
+    start_date = '...'
+    end_date = '...'
+    dates = pd.date_range(start_date, end_date)
+# create empty df1
+    df1 = pd.DateFrame(index = dates)
+    dfSPY = pd.read_csv("...", index_col = "Date", parse_dates = True
+                        usecols = ['Date', 'Adj Close'], # return subset of cols
+                        na_values = ['nan'])   # additional strings to recg
+    df1 = df1.join(dfSPY, how = 'inner')
+    df1 = df1.dropna()     #drop nan
+#read in more stocks
+    symbols = ['GOOG', 'IBM', 'GLD'] #list
+    for symbol in symbols:
+        df_temp = pd.read_csv("...".format(symbol), index_col = 'Date',
+                              parse_dates = True, usecols = ['Date', 'Adj Close'],
+                              na_values = ['nan'])
+        df_temp = df_temp.rename(columns = {'Adj Close': symbol})
+        df1 = df1.join(df_temp)
+
+############
+## 0708
+############
+# utility functions: return csv file path given ticker symbol
+import os
+def symbol_to_path(symbol, base_dir = "data"):
+    return os.path.join(base_dir, "{}.csv".format(str(symbol)))
+
+def get_data(symbols, dates):
+    df = pd.DateFrame(index = dates)
+    if 'SYP' not in symbols: #add SPY for reference if absent
+        symbols.insert(0, 'SYP')
+    for symbol in symbols:
+        df_temp = pd.read_csv(symbol_to_path(symbol), index_col = 'Date',
+                          parse_dates = True, usecols = ['Date', 'Adj Close'],
+                          na_values = ['nan'])
+        df_temp = df_temp.rename(columns = {'Adj Close': symbol})
+        df1 = df.join(df_temp)
+        if symbol == 'SPY':
+        df = df.dropna(subset = ["SPY"])
+
+# row slicing
+df = get_data(symbols, dates)
+print df.ix['2020-01-01' : '2020-07-08'] # select
+# col slicing
+print df[['GOOG', 'IBM']]
+# 2-dim slicing
+print df.ix['2020-01-01' : '2020-07-08', ['GOOG', 'IBM']]
+
+# plot selection
+import matplotlib.pyplot as plt
+def plot_data(df, title = "Stock Prices"):
+    ax = df.plot(title = title, fontsize = 2)
+    ax.set_xlabel("Date")
+    ax.set_ylabel("Price")
+    plt.show()
+def plot_selected(df, columns, start_index, end_index):
+    plot_data(df.ix[start_index : end_index, columns], title = "Selected Data")
+
+# normalize
+def normalize_data(df):
+    return df/df.ix[0, :]

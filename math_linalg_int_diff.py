@@ -8,8 +8,10 @@ a = np.array([[1.0, 2.0], [3.0, 4.0]])
 y = np.array([[5.], [7.]])
 #%% Inverse
 ainv = np.linalg.inv(a) # not precise
-# dot product
-dotprod = np.dot(a, ainv)
+# dot product_new @
+dotprod_new = a @ ainv
+# dot product_old python
+dotprod_old = np.dot(a, ainv)
 
 # Transpose
 T = a.transpose()
@@ -92,23 +94,3 @@ del_y= sy.diff(f, y)
 yo = sy.nsolve(del_y, -2)
 # global min that both partial derivatives are zero
 f.subs({x: xo, y:yo}).evalf()
-
-#%%
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

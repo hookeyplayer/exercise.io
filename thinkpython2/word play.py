@@ -6,7 +6,8 @@ Created on Sun Oct  4 02:30:25 2020
 """
 
 # =============================================================================
-# word play (1.search; 2. looping with indices)
+# 1.search; 
+# 2.looping with indices;
 # =============================================================================
 from urllib.request import urlopen
 target_url = 'https://raw.githubusercontent.com/AllenDowney/ThinkPython2/master/code/words.txt'
@@ -117,42 +118,3 @@ find('Jerry', 'e')
 
 # Recursion: call itself
 # Iteration: run block repeatedly
-# =============================================================================
-# approximation of pi
-# =============================================================================
-from __future__ import print_function, division
-
-import math
-
-
-def factorial(n):
-    """Computes factorial of n recursively."""
-    if n == 0:
-        return 1
-    else:
-        recurse = factorial(n-1)
-        result = n * recurse
-        return result
-
-
-def estimate_pi():
-    """Computes an estimate of pi.
-    Algorithm due to Srinivasa Ramanujan, from 
-    http://en.wikipedia.org/wiki/Pi
-    """
-    total = 0
-    k = 0
-    factor = 2 * math.sqrt(2) / 9801
-    while True:
-        num = factorial(4*k) * (1103 + 26390*k)
-        den = factorial(k)**4 * 396**(4*k)
-        term = factor * num / den
-        total += term
-        
-        if abs(term) < 1e-15:
-            break
-        k += 1
-
-    return 1 / total
-
-print(estimate_pi())

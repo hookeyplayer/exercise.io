@@ -18,20 +18,24 @@ y = wine.target
 X_train,  X_test, y_train, y_test = train_test_split(X, y)
 clf = tree.DecisionTreeClassifier(max_depth=3) # 问的问题数量越多，决策树越深
 clf.fit(X_train, y_train)
+
 x_min, x_max = X_train[:, 0].min() - 1, X_train[:, 0].max() + 1
 y_min, y_max = X_train[:, 1].min() - 1, X_train[:, 1].max() + 1
 xx, yy = np.meshgrid(np.arange(x_min, x_max, .02),
                      np.arange(y_min, y_max, .02))
 Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
 Z = Z.reshape(xx.shape)
+
 cmap_light = ListedColormap(['#FFAAAA', '#AAFFAA', '#AAAAFF']) #background
 cmap_bold = ListedColormap(['#FF0000', '#00FF00', '#0000FF'])
+
 plt.figure()
 plt.pcolormesh(xx, yy, Z, cmap=cmap_light)
 plt.scatter(X[:, 0], X[:, 1], c=y, cmap=cmap_bold, edgecolors='k', s=20)
 plt.xlim(xx.min(), xx.max())
 plt.ylim(yy.min(), yy.max())
 plt.title('Classifier: max_depth = 3')
+
 #%%画不出决策树
 # import graphviz
 # from sklearn.tree import export_graphviz
@@ -40,16 +44,19 @@ plt.title('Classifier: max_depth = 3')
 # with open("wine.dot") as f:
 #     dot_graph = f.read()
 # graphviz.Source(dot_graph)
+
 #%%随机森林RF和梯度上升GBDT(gradient boosted decision trees)
 from sklearn.ensemble import RandomForestClassifier
 forest = RandomForestClassifier(n_estimators=4, random_state=8)
 forest.fit(X_train, y_train)
 Z1 = forest.predict(np.c_[xx.ravel(), yy.ravel()])
 Z1 = Z1.reshape(xx.shape)
+
 plt.figure()
 plt.pcolormesh(xx, yy, Z1, cmap=cmap_light)
 plt.scatter(X[:, 0], X[:, 1], c=y, cmap=cmap_bold, edgecolors='k', s=20)
 plt.title('Classifier: RandomForest')
+
 #%%
 import pandas as pd
 adult = pd.read_csv('adult.csv', header=None, index_col=False,
@@ -59,10 +66,12 @@ pd.set_option('display.max_columns',44)
 display(adult.head())
 
 # np.set_printoptions(threshold=1e6) 
+
 # convert string text to value
 adult_dummies = pd.get_dummies(adult)
 # print('样本原始特征:\n', list(adult.columns), '\n')
 print('虚拟变量特征:\n', list(adult_dummies.columns), '\n')
+
 #%%
 # display(adult_dummies.head())
 # 特征为年龄～职业transport-moving的列们，标签是收入>50K
@@ -74,6 +83,7 @@ X_train,  X_test, y_train, y_test = train_test_split(X, y, random_state=0)
 go_dating_tree = tree.DecisionTreeClassifier(max_depth=5)
 go_dating_tree.fit(X_train, y_train)
 print('模型得分:{:.2f}'.format(go_dating_tree.score(X_test, y_test)))
+
 #%%
 # test, 在政府工作，虽然学历很高，但收入不足要求
 Mr_Z = [[37,40,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,

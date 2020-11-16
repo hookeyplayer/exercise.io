@@ -32,3 +32,31 @@ FROM teachers;
 SELECT first_name, last_name, salary
 FROM teachers
 ORDER BY salary DESC;
+
+-- 按学校分组的生序+受聘日期的降序
+SELECT last_name, school, hire_date 
+FROM teachers
+ORDER BY school ASC, hire_date DESC;
+
+-- 添加过滤条件
+SELECT last_name, school, hire_date FROM teachers
+WHERE school = 'Myers Middle School';
+-- not equal
+WHERE school <> 'Baker Middle'
+--日期也可以比较，此处选取在之前
+WHERE hire_date < '2000-01-01';
+-- 区间内
+WHERE salary BETWEEN 20000 AND 40000
+-- 匹配一个子集（包含在一个集合里）
+WHERE last_name IN ('Bush', 'Roush')
+-- 符合某种形式
+WHERE first_name LIKE '%am%'
+-- 不区分大小写
+WHERE first_name ILIKE 'sam%'
+-- 否定
+WHERE first_name NOT LIKE 'Sam%'
+-- 复合
+SELECT *
+FROM teachers
+WHERE school = 'F.D. Roosevelt HS'
+    AND (salary < 38000 OR salary > 40000);

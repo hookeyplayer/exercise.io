@@ -44,3 +44,9 @@ filename = 'programming.txt'
 with open(filename, 'w') as file_object:
 	file_object.write("I love programming.\n")
 	file_object.write("I also love programming.\n")
+	
+# 给文件末尾继续附加内容，而不是覆盖
+filename = 'programming.txt'
+with open(filename, 'a') as file_object:
+	file_object.write("I also love finding meaning in large datasets.\n")
+	file_object.write("I love creating apps that can run in a browser.\n")

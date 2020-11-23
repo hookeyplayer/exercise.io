@@ -3,6 +3,32 @@ from scipy.stats import norm
 from random import uniform
 import matplotlib.pyplot as plt
 import numpy as np
+
+# 一、手动
+squares = [1, 4, 9, 16, 25]
+# linewidth():线条粗细
+# 这种方法绘制的图因为没有指明x轴，所以横坐标0对应1， 横坐标4对应25，是错的
+# plt.plot(squares, linewidth=5)
+input_values = [1, 2, 3, 4, 5]
+plt.plot(input_values, squares, linewidth=5)
+# 设置图表标题，并给坐标轴加上标签
+plt.title("Square Numbers", fontsize=24) 
+plt.xlabel("Value", fontsize=14)
+plt.ylabel("Square of Value", fontsize=14) 
+# 设置刻度标记的大小
+plt.tick_params(axis='both', labelsize=14)
+#%%
+
+# 二、自动
+x_values = list(range(1, 1001)) 
+# 生成y值的列表解析
+y_values = [x**2 for x in x_values]
+# RGB颜色模式，红绿蓝，近0深，近1浅
+# 颜色映射突出数据规律
+plt.scatter(x_values, y_values, edgecolor='none', s=8, c=(0, 0.9, 0.9)) 
+# 设置每个坐标轴的取值范围 
+plt.axis([0, 1100, 0, 1100000])
+plt.show()
 #%%
 # =============================================================================
 # # 一副三线
@@ -76,20 +102,3 @@ fig, ax = plt.subplots()
 ax.hist(obs, bins=40, density=True) # density is line
 ax.plot(grid, beta.pdf(grid, 5, 5), 'k-', linewidth=2)
 plt.show()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

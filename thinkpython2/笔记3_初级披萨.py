@@ -8,7 +8,7 @@ print("You ordered a " +
 for topping in pizza['toppings']:
 	print("\t" + topping)
 
-一、单变量披萨配料：创建形参空元组 *toppings
+# 一、单变量披萨配料：创建形参空元组 *toppings
 def make_pizza(*toppings):
 	print("\nMaking a pizza with the following toppings:")
 	for topping in toppings:

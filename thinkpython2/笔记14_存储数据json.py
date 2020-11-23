@@ -2,11 +2,13 @@ import json
 
 # numbers = [2, 3, 5, 7, 11, 13]
 # filename = 'numbers.json'
+
 # with open(filename, 'w') as f_obj:
+# 函数json.dump()接受两个实参:要存储的数据以及可用于存储数据的文件对象
 # 	json.dump(numbers, f_obj) #存储到文件number里
 
 # with open(filename) as f_obj:
-# 	numbers = json.load(f_obj) #加载存储在number里的信息
+# 	numbers = json.load(f_obj) #加载信息
 # 	print(numbers)
 
 username = input("What is your name? ")

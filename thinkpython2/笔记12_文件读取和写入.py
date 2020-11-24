@@ -50,3 +50,22 @@ filename = 'programming.txt'
 with open(filename, 'a') as file_object:
 	file_object.write("I also love finding meaning in large datasets.\n")
 	file_object.write("I love creating apps that can run in a browser.\n")
+
+#指定csv	
+import csv
+filename = 'sitka_weather_07-2014.csv'
+with open(filename) as f:
+    reader = csv.reader(f)
+# 查看文件头    
+# header_row = next(reader) # next():返回文件中的下一行
+# print(header_row)
+
+for index, column_header in enumerate(header_row):
+    print(index, column_header)
+# 提取数据
+highs = []
+for row in reader:
+    # highs.append(row[1])
+    # print(highs)
+    high = int(row[1])
+    highs.append(high)

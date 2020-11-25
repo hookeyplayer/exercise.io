@@ -26,7 +26,6 @@ if __name__ == '__main__':
 # 	return a_index
 
 # # 给列表排序
-
 # def selectionSort(arr):
 # 	newArr = []
 # 	for i in range(len(arr)):

@@ -1,3 +1,13 @@
+# # 给列表排序
+# def selectionSort(arr):
+# 	newArr = []
+# 	for i in range(len(arr)):
+# 		a = findMinNumber(arr)
+# 		newArr.append(arr.pop(a))
+# 	return newArr
+
+# print(selectionSort([3, 5, 8, 1, 9, 0]))
+
 def selectionSort2(arr):
     """
     选择排序 不申请额外内存
@@ -24,14 +34,3 @@ if __name__ == '__main__':
 # 			a = arr[i]
 # 			a_index = i
 # 	return a_index
-
-# # 给列表排序
-# def selectionSort(arr):
-# 	newArr = []
-# 	for i in range(len(arr)):
-# 		a = findMinNumber(arr)
-# 		newArr.append(arr.pop(a))
-# 	return newArr
-
-# print(selectionSort([3, 5, 8, 1, 9, 0]))
-

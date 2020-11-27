@@ -1,0 +1,37 @@
+.gitignore内容一行__pycache__/
+git init
+git status
+
+文件加入仓库中
+git add .
+
+执行提交
+git commit -m "Started project."
+
+查看提交历史
+git log
+git log --pretty=oneline
+
+二次提交
+commit -am "Extended greeting"
+git status
+git log --pretty=oneline
+
+撤销提交
+git checkout .
+git status
+
+git lot --pretty=oneline 查看该提交的引用ID
+git checkout 输入前6个字符
+
+回到分支
+git checkout master
+
+删除仓库
+git status
+rm -rf .git 删除了目录.git
+git status
+git init 
+git status
+git add .
+git commit -m "Starting over."

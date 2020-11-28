@@ -22,7 +22,7 @@ class Solution(object):
 
 # 法二：求根公式
 class Solution(object):
-    def arrangeCoins(self, n):
+    def arrange_coins(self, n):
 
         # 1 +2 + 3 + ... + k = (k + 1) * k / 2 < n
         

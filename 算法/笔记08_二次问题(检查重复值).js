@@ -8,7 +8,6 @@ function has_duplicate_value(array) {
 	for(var i = 0; i < array.length; i++) {
 		for(var j = 0; j < array.length; j++) {
 			steps++;
-
 			if(i != j && array[i] == array[j]) {
 				return true;
 			}
@@ -28,6 +27,21 @@ function has_duplicate_value2(array) {
 		if(existing_nums[array[i]] === undefined) {
 			existing_nums[array[i]] = 1;
 		} else{
+			return true;
+		}
+	}
+	return false;
+}
+
+//法三：散列表可以处理字符串,将字符串作为键
+//O(N)
+function has_duplicate_value3(array) {
+	var existing_nums = {};
+	for(var i = 0; i < array.length; i++) {
+		if(existing_nums[i] === undefined) {
+			existing_nums[array[i]] = 1;
+		}
+		else {
 			return true;
 		}
 	}

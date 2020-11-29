@@ -26,7 +26,7 @@ function has_duplicate_value2(array) {
 	for(var i = 0; i < array.length; i++) {
 		if(existing_nums[array[i]] === undefined) {
 			existing_nums[array[i]] = 1;
-		} else{
+		} else {
 			return true;
 		}
 	}
@@ -40,8 +40,7 @@ function has_duplicate_value3(array) {
 	for(var i = 0; i < array.length; i++) {
 		if(existing_nums[i] === undefined) {
 			existing_nums[array[i]] = 1;
-		}
-		else {
+		} else {
 			return true;
 		}
 	}

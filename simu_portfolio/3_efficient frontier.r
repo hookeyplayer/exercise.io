@@ -23,6 +23,10 @@ data_env <- new.env()
 getSymbols(Symbols='^GDAXI', from='2010-12-10', to='2020-11-26',
                   env = data_env)
 dax <- do.call(merge, eapply(data_env, Ad))
+getSymbols(Symbols='^TNX', from='2010-12-10', to='2020-11-26',
+           env = data_env)
+rf <- do.call(merge, eapply(data_env, Ad))
+
 # a <- log(dax)
 # a[is.na(a)] <- 0
 # a <- na.omit(a)

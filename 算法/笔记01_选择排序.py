@@ -8,6 +8,16 @@
 
 # print(selectionSort([3, 5, 8, 1, 9, 0]))
 
+# # 查找列表里最小值和它的索引键
+# def findMinNumber(arr):
+# 	a = arr[0]
+# 	a_index = 0
+# 	for i in range(1, len(arr)):
+# 		if arr[i] < a:
+# 			a = arr[i]
+# 			a_index = i
+# 	return a_index
+
 def selectionSort2(arr):
     m = len(arr)
     for i in range(m - 1):
@@ -19,13 +29,3 @@ def selectionSort2(arr):
 if __name__ == '__main__':
     array = [4, 2, 5, 6, 7, 9, 1, 8, 3, 10]
     print(selectionSort2(array))
-
-# # 查找列表里最小值和它的索引键
-# def findMinNumber(arr):
-# 	a = arr[0]
-# 	a_index = 0
-# 	for i in range(1, len(arr)):
-# 		if arr[i] < a:
-# 			a = arr[i]
-# 			a_index = i
-# 	return a_index

@@ -24,7 +24,6 @@ class SortableArray
 			while @array[left_pointer] < pivot do 
 				left_pointer += 1
 			end
-
 			while @array[right_pointer] > pivot do
 				right_pointer -= 1
 			end
@@ -38,7 +37,6 @@ class SortableArray
 			else
 				swap(left_pointer, right_pointer)
 			end
-
 		end
 
 		# 左指针的值和pivot交换，并返回左指针
@@ -52,7 +50,6 @@ class SortableArray
 		@array[pointer_1] = @array[pointer_2]
 		@array[pointer_2] = temp_value
 	end
-
 end
 
 
@@ -71,7 +68,5 @@ def quicksort!(left_index, right_index)
 	# 对左右各自递归调用
 
 	quicksort!(left_index, pivot_position - 1)
-
 	quicksort!(pivot_position + 1, right_index)
 end
-

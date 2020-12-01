@@ -9,11 +9,6 @@
 # print(selectionSort([3, 5, 8, 1, 9, 0]))
 
 def selectionSort2(arr):
-    """
-    选择排序 不申请额外内存
-    :param arr: 待排序列表
-    :return: 排序了的列表
-    """
     m = len(arr)
     for i in range(m - 1):
         for j in range(i + 1, m):

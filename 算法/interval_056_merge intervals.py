@@ -28,14 +28,15 @@ class Solution(object):
 			return []
 		intervals = sorted(intervals, key=lambda x: x.start) # 任何的sort
 		res = []
+		# 首个区间作为当前区间，取左右端点
 		left = intervals[0].start
 		right = intervals[0].end
 		for item in intervals:
-			if item.start <= right:
-				right = max(right, item.end)
+			if item.start <= right: # 若新区间的左端点小于当前区间的右端点，则可以合并
+				right = max(right, item.end) # 取两者之较大值为新的右端点
 			else:
-				res.append([left, right])
-				left = item.start
+				res.append([left, right]) # 否则，需要添加此区间
+				left = item.start # 并重置端点
 				right = item.end
 		res.append([left, right])
 

@@ -68,12 +68,6 @@ ON schools_left.id = schools_right.id
 WHERE schools_right.id IS NULL;
 
 -- 查找一列（表的subset，而非全部）
--- 报错的写法：
--- SELECT id
--- FROM schools_left LEFT JOIN schools_right 
--- ON schools_left.id = schools_right.id;
-
--- 正确的写法：
 SELECT schools_left.id,
        schools_left.left_school,
        schools_right.right_school

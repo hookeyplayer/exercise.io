@@ -117,8 +117,7 @@ SELECT
     rank() OVER (PARTITION BY category ORDER BY unit_sales DESC)
 FROM store_sales;
 
--- Listing 10-8: Create and fill a 2015 FBI crime data table
-
+-- Create and fill a 2015 FBI crime data table
 CREATE TABLE fbi_crime_data_2015 (
     st varchar(20),
     city varchar(50),
@@ -138,7 +137,7 @@ WITH (FORMAT CSV, HEADER, DELIMITER ',');
 SELECT * FROM fbi_crime_data_2015
 ORDER BY population DESC;
 
--- Listing 10-9: Find property theft crime rates per thousand residents in cities with 500,000
+-- Find property theft crime rates per thousand residents in cities with 500,000
 -- or more people
 SELECT
     city,

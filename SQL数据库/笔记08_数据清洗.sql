@@ -162,6 +162,18 @@ SET st = backup.st
 FROM meat_poultry_egg_inspect_backup backup
 WHERE original.est_number = backup.est_number; 
 
+-- 重新制表，先得删除
+DROP TABLE meat_poultry_egg_inspect_backup;
+-- 增加了新column reviewed_date，借助value cast
+CREATE TABLE meat_poultry_egg_inspect_backup AS
+SELECT *,
+       '2018-02-07'::date AS reviewed_date
+FROM meat_poultry_egg_inspect;
+
+-- swap tables
+ALTER TABLE meat_poultry_egg_inspect RENAME TO meat_poultry_egg_inspect_temp;
+ALTER TABLE meat_poultry_egg_inspect_backup RENAME TO meat_poultry_egg_inspect;
+ALTER TABLE meat_poultry_egg_inspect_temp RENAME TO meat_poultry_egg_inspect_backup;
 
 
 
@@ -187,21 +199,11 @@ FROM meat_poultry_egg_inspect
 GROUP BY st, inspection_date
 ORDER BY st;
 
--- 删除行
-DELETE FROM meat_poultry_egg_inspect
-WHERE st IN('PR','VI');
-
--- 从表中移除列
-ALTER TABLE meat_poultry_egg_inspect DROP COLUMN zip_copy;
-
--- 从数据库中移除表
-DROP TABLE meat_poultry_egg_inspect_backup;
-
--- Listing 9-24: Demonstrating a transaction block
-
--- Start transaction and perform update
+-- transaction block:一切修改敲定给你检查的机会
 START TRANSACTION;
+-- BEGIN --PostgreSQL特有
 
+-- 例如，想要去除多余逗号typo
 UPDATE meat_poultry_egg_inspect
 SET company = 'AGRO Merchantss Oakland LLC'
 WHERE company = 'AGRO Merchants Oakland, LLC';
@@ -212,7 +214,7 @@ FROM meat_poultry_egg_inspect
 WHERE company LIKE 'AGRO%'
 ORDER BY company;
 
--- Revert changes
+-- block结束并revert所做的变动
 ROLLBACK;
 
 -- See restored state
@@ -228,30 +230,26 @@ UPDATE meat_poultry_egg_inspect
 SET company = 'AGRO Merchants Oakland LLC'
 WHERE company = 'AGRO Merchants Oakland, LLC';
 
-COMMIT;
-
--- Listing 9-25: Backing up a table while adding and filling a new column
-
-CREATE TABLE meat_poultry_egg_inspect_backup AS
-SELECT *,
-       '2018-02-07'::date AS reviewed_date
-FROM meat_poultry_egg_inspect;
-
--- Listing 9-26: Swapping table names using ALTER TABLE
-
-ALTER TABLE meat_poultry_egg_inspect RENAME TO meat_poultry_egg_inspect_temp;
-ALTER TABLE meat_poultry_egg_inspect_backup RENAME TO meat_poultry_egg_inspect;
-ALTER TABLE meat_poultry_egg_inspect_temp RENAME TO meat_poultry_egg_inspect_backup;
+-- block的结束，保存所有修改
+COMMIT; 
 
 
 -- 公式：
--- 新增/删除
+-- 删除所有row
+DELETE FROM meat_poultry_egg_inspect;
+-- 删除特定row
+DELETE FROM meat_poultry_egg_inspect
+WHERE st IN('PR','VI');
+-- 新增/删除column
 ALTER TABLE table ADD COLUMN column data_type;
 ALTER TABLE table DROP COLUMN column;
+-- 例如
+ALTER TABLE meat_poultry_egg_inspect DROP COLUMN zip_copy;
 -- 更改约束：列的数据类型、not null
 ALTER TABLE table ALTER COLUMN column SET DATA TYPE data_type;
 ALTER TABLE table ALTER COLUMN column SET NOT NULL;
 ALTER TABLE table ALTER COLUMN column DROP NOT NULL;
+
 -- 更新
 UPDATE table
 SET column = value;

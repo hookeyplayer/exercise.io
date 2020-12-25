@@ -32,4 +32,4 @@ public class PowersOfTwo
 			mult += mult; // same, mult = mult * 2
 		}
 	}
-}
+} 

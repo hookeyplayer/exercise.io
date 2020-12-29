@@ -1,5 +1,4 @@
 // O(logn)
-// C++
 int countones(unsigned int n)
 {
 	int ones = 0; //计数器复位

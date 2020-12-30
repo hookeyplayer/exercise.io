@@ -1,13 +1,3 @@
-// find max
-public static double max(double[] a) 
-{
-	//static final field, -1.0 / 0.0
-	double max = Double.NEGATIVE_INFINITY; 
-	for (int i = 0; i < a.length; i++)
-		if (a[i] > max) max = a[i];
-	return max;
-}
-
 // 点乘
 public static double dot(double[] a, double[] b)
 {
@@ -15,25 +5,6 @@ public static double dot(double[] a, double[] b)
 	for (int i = 0; i < a.length; i++)
 		sum += a[i] * b[i]; 
 	return sum;
-}
-
-// 求平均
-import java.util.*;
-public class Average
-{
-	public static void main(String[] args)
-	{
-		double sum = 0.0;
-		int n = 0;
-		while (! System.in.isEmpty())
-		{
-			double value = System.in.readDouble();
-			sum += value;
-			n++;
-		}
-		double average = sum / n;
-		System.out.println("Avg is " + average);
-	}
 }
 
 // exchange

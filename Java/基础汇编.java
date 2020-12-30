@@ -27,6 +27,44 @@ public static double[][] readDouble2D()
 	return a;
 
 }
+// combination of a few
+public class Stats {
+	//max
+	public static double max(double[] a) {
+		//static final field, -1.0 / 0.0
+		double max = Double.NEGATIVE_INFINITY; 
+		for (int i = 0; i < a.length; i++)
+			if (a[i] > max) max = a[i];
+		return max;
+	}
+
+	//average
+	import java.util.*;
+	public static double mean(double[] a) {
+		double sum = 0.0;
+		for (int i = 0; i < a.length; i++)
+			sum += a[i];
+		return sum / a.length;
+	}
+
+	//variance
+	public static double var(double[] a) {
+		double avg = mean(a);
+		double sum = 0.0;
+		for (int i = 0; i < a.length; i++)
+			sum += (a[i] - avg) * (a[i] - avg);
+		return sum / (a.length - 1);
+	}
+	 // standard deviation
+	public static double stddev(double[] a) 
+	{
+		return Math.sqrt(var(a));
+	}
+
+	public static void main(String[] args) {
+		/* I/O */
+	}
+}
 
 //Others
 public class Flip

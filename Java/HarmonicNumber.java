@@ -8,14 +8,23 @@
 // 		System.out.println(sum);
 // 	}
 // }
+
+//combination of module as whole using main() & recursion
 public class HarmonicNumber
 {
+// 	public static double harmonic(int n)
+// 	{
+// 		double sum = 0.0;
+// 		for (int i = 1; i <= n; i++) sum += 1.0 / i;
+// 		return sum;
+// 	}
+	
 	public static double harmonic(int n)
 	{
-		double sum = 0.0;
-		for (int i = 1; i <= n; i++) sum += 1.0 / i;
-		return sum;
+		if (n == 1) return 1.0;
+		return harmonic(n-1) + 1.0/n;
 	}
+	
 	public static void main(String[] args)
 	{
 		for (int i = 0; i < args.length; i++)

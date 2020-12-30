@@ -1,13 +1,63 @@
-public class HelloWorld
+// find max
+public static double max(double[] a) 
+{
+	//static final field, -1.0 / 0.0
+	double max = Double.NEGATIVE_INFINITY; 
+	for (int i = 0; i < a.length; i++)
+		if (a[i] > max) max = a[i];
+	return max;
+}
+
+// 点乘
+public static double dot(double[] a, double[] b)
+{
+	double sum = 0.0;
+	for (int i = 0; i < a.length; i++)
+		sum += a[i] * b[i]; 
+	return sum;
+}
+
+// 求平均
+import java.util.*;
+public class Average
 {
 	public static void main(String[] args)
 	{
-		System.out.print("Hello, ");
-		System.out.print(args[0]);
-		System.out.print(".Good morning.");
+		double sum = 0.0;
+		int n = 0;
+		while (! System.in.isEmpty())
+		{
+			double value = System.in.readDouble();
+			sum += value;
+			n++;
+		}
+		double average = sum / n;
+		System.out.println("Avg is " + average);
 	}
 }
 
+// exchange
+public static void exchange(String[] a, int i, int j)
+{
+	String temp = a[i];
+	a[i] = a[j];
+	a[j] = temp;
+}
+
+// read matrix in row-major order
+public static double[][] readDouble2D()
+{
+	int m = System.in.readInt();
+	int n = System.in.readInt();
+	double [][] a = new double[m][n];
+	for (int i = 0; i < m; i++)
+		for (int j = 0; j < n; j++)
+			a[i][j] = System.in.readDouble();
+	return a;
+
+}
+
+//Others
 public class Flip
 {
 	public static void main(String[] args)
@@ -19,16 +69,6 @@ public class Flip
 	}
 }
 
-// Math.round(3.14159)
-// double exp(double b)
-// double pow(double a, double b)
-
-// char <-> double/int
-int Integer.parseInt(String s)
-double Double.parseDouble(String s)
-long Long.parseLong(String s)
-
-// leapyear verification(本应另开一个文件)
 public class isLeapYear
 {
 	public static void main(String[] args)

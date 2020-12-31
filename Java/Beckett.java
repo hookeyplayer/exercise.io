@@ -10,4 +10,4 @@ public class Beckett {
 		int n = Integer.parseInt(args[0]);
 		moves(n, true);
 	}
-}
+} 

@@ -1,27 +1,17 @@
-# 创建数字序列，并打印其乘方
 # 法一 列表解析
 squares = [value**2 for value in range(1, 11)]
 print(squares)
 
-# 法二,0.0s
-
+# 法二
 # squares = []
 # for value in range(1,11): 
 # 	squares.append(value**2)
 # print(squares)
 
-# # 法三
-# squares = []
-# for value in range(1,11):
-# 	square = value**2
-# 	squares.append(square)
-# print(squares)
-
-# 法四很像法二，但0.1s
+# 法三很像法二，但慢
 # for value in list(range(1, 11)):
 # 	squares.append(value**2)
 # print(squares)
-
 
 # 字典的遍历
 favorite_languages = {
@@ -49,5 +39,3 @@ for language in set(favorite_languages.values()):
 # 按顺序遍历
 for name in sorted(favorite_languages.keys()):
 	print(name.title() + " Thanks!")
-
-

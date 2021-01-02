@@ -1,3 +1,4 @@
+# 排队打印是queue队列问题
 # 首先创建一个列表，包含要打印的设计
 # unprinted_designs = ['iphone case', 'robot pendant', 'dodecahedron'] 
 # completed_models = []

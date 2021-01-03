@@ -1,3 +1,4 @@
+# 对列表多次重复遍历
 # 两个指针不停地一直把较大的元素换到右边
 # 每次轮回后，未排序的值中最大的会冒到正确位置上
 def bubble_sort(list):
@@ -14,7 +15,7 @@ def bubble_sort(list):
 		for i in range(unsorted_until_index):
 			if list[i] > list[i+1]:
 				sorted = False
-				list[i], list[i+1] = list[i+1], list[i]
+				list[i], list[i+1] = list[i+1], list[i] # 同时赋值
 		unsorted_until_index = unsorted_until_index - 1
 
 list = [65, 44, 35, 14, 10]

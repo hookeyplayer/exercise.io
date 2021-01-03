@@ -1,3 +1,4 @@
+# 保有位置靠前的排列完美的前半部分，之后的新数据插入进去
 # 移除：n-1次
 # 比较：1+2+3+...+(n-1)=n(n-1)/2,约为N^2/2
 # 平移：=比较的次数
@@ -6,8 +7,8 @@
 
 def insertion_sort(array):
 
-	# 从索引1开始的循环，遍历数组
-	# 变量index保存的是当前索引
+	# 从索引1开始的遍历
+	# 变量index保存当前索引
 
 	for index in range(1, len(array)):
 		position = index
@@ -24,8 +25,6 @@ def insertion_sort(array):
 		# 最后将temp放回空隙
 
 		array[position] = temp
-
-
 
 array = [4, 2, 7, 1, 3]
 print(insertion_sort(array))

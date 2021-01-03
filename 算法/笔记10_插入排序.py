@@ -1,4 +1,5 @@
 # insertA[i] into sorted array A[0:i-1]
+# 通过pariwise swaps down to correct position of A[i]
 # 移除：n-1次
 # 比较：1+2+3+...+(n-1)=n(n-1)/2,约为N^2/2
 # 平移：=比较的次数

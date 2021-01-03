@@ -24,3 +24,15 @@ print(list)
 # 4+3+...+1 = 10
 # (1+k)*k/2
 # O(N^2)
+
+def bubble_sort2(arr):
+    m = len(arr)
+    for i in range(m - 1):
+        for j in range(i + 1, m):
+            if arr[i] > arr[j]:
+                arr[i], arr[j] = arr[j], arr[i]
+    return arr
+
+if __name__ == '__main__':
+    array = [4, 2, 5, 6, 7, 9, 1, 8, 3, 10]
+    print(bubble_sort2(array))

@@ -1,12 +1,9 @@
 # given string, return number of segments(non-space characters)
 class Solution(object):
-
-	# 法一：内置函数
-    
+# 法一：内置函数
     def count_segments(self, s):
         return len(s.split())
-
-    # 法二：空值和非空值配对计数
+# 法二：空值和非空值配对计数
 
     def count_segments(self, s):
     	segment_count = 0

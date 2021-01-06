@@ -55,7 +55,6 @@ class Solution:
     			self.dfs(nums[:i] + nums[i+1:], res, path+[nums[i]])
 
 
-
 nums = [1, 2, 3]
 test = Solution()
 print(test.permute(nums))

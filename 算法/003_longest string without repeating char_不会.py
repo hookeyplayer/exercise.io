@@ -1,9 +1,7 @@
 # given "abcabc", 给出子串的长度3
 
 class Solution(object):
-# 1:虫取法
-# 根据某个条件交替移动前后指针，使得在双指针之内的这部分是满足题意要求
-# 双指针法+sliding window，[left, right]双闭区间来保存子串的左右区间，对应着这个区间维护一个set，这个set里面全部是不重复的字符。
+# 1:hash+双指针法+sliding window，[left, right]双闭区间来保存子串的左右区间，对应着这个区间维护一个set，这个set里面全部是不重复的字符。
 
 	def lengthOfLongestSubstring(self, s):
 		left, right = 0, 0
@@ -21,6 +19,18 @@ class Solution(object):
 		return res
 	
 # 2
+	def lengthOfLongestSubstring(self, s):
+		left, right = 0, 0
+		res = 0
+		char_map = {}
+		for right in range(len(s)):
+			if s[right] in char_map:
+				left = max(left, char_map[s[right]] + 1)
+			char_map[s[right]] = right
+			res = max[res, right - left + 1]
+		return res
+	
+# 3
 # 	def lengthOfLongestSubstring(self, s):
 # 		char_map = {}
 # 		for i in range(256):
@@ -33,19 +43,7 @@ class Solution(object):
 # 			char_map[ord(s[j])] = j
 # 			max_len = max(max_len, j - i + 1)
 # 		return max_len
-	
-# 3: hash table
-	def lengthOfLongestSubstring(self, s):
-		left, right = 0, 0
-		res = 0
-		char_map = {}
-		for right in range(len(s)):
-			if s[right] in char_map:
-				left = max(left, char_map[s[right]] + 1)
-			char_map[s[right]] = right
-			res = max[res, right - left + 1]
-		return res
-	
+
 # 4
 	def lengthOfLongestSubstring(self, s):
 		exist = [False] * 256

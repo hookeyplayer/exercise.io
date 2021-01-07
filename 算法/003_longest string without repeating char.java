@@ -9,6 +9,7 @@ class Solution {
             if (hash[c] > preP) {
                 preP = hash[c];
             }
+            //作差
             int l = i - preP + 1;
             hash[c] = i + 1;
             if (l > max) max = l;

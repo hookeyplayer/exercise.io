@@ -34,7 +34,7 @@ class Solution(object):
 # 			max_len = max(max_len, j - i + 1)
 # 		return max_len
 	
-# 3: 遍历+字典
+# 3: hash table
 	def lengthOfLongestSubstring(self, s):
 		left, right = 0, 0
 		res = 0
@@ -47,14 +47,14 @@ class Solution(object):
 		return res
 	
 # 4
-# 	def lengthOfLongestSubstring(self, s):
-# 		exist = [False] * 256
-# 		length = len(s)
-# 		max_len = i = 0
-# 		for j in range(length):
-# 			while(exist[ord(s[j])]):
-# 				exist[ord(s[i])] = False
-# 				i += 1
-# 			exist[ord(s[j])] = True
-# 			max_len = max(max_len, j - i + 1)
-# 		return max_len
+	def lengthOfLongestSubstring(self, s):
+		exist = [False] * 256
+		length = len(s)
+		max_len = i = 0
+		for j in range(length):
+			while(exist[ord(s[j])]):
+				exist[ord(s[i])] = False
+				i += 1
+			exist[ord(s[j])] = True
+			max_len = max(max_len, j - i + 1)
+		return max_len

@@ -1,41 +1,41 @@
-# 一个非空数列，每个元素都出现了两次，除了一个元素。找出这个元素。
-# 法一：异或
 class Solution(object):
-	def single_number(self, nums):
-		r = 0
-		for i in nums:
-			r ^= i
-		return r
+# hash
+	# def singleNumbers(self, nums):
+	# 	dict = {}
+	# 	for i in nums:
+	# 		try:
+	# 			dict.pop(i)
+	# 		except:
+	# 			dict[i] = 1
+	# 	return dict.popitem()[0]
 
-if __name__ == '__main__':
-	s = Solution()
-	print(s.single_number([0, 2, 2, 3]))
+# array
+	# def singleNumbers(self, nums):
+	# 	a = []
+	# 	for i in nums:
+	# 		if i in a:
+	# 			a.remove(i)
+	# 		else:
+	# 			a.append(i)
+	# 	return a.pop()
 
-# 法二：异或的不同写法
-class Solution(object):
-    # def singleNumber(self, nums):
-    #     dic = {}
-    #     for num in nums:
-    #         try:
-    #             dic[num] += 1
-    #         except KeyError:
-    #             dic[num] = 1
-    #     for num in nums:
-    #         if dic[num] == 1:
-    #             return num
+# 外部包
+	# def singleNumber(self, nums):
+	# 	from collections import Counter
+	# 	cnt = Counter(nums)
+	# 	for k, v in cnt.items():
+	# 		if v == 1:
+	# 			return k
 
-    # def singleNumber(self, nums):
-    #     # set
-    #     s = set()
-    #     for num in nums:
-    #         if num in s:
-    #             s.remove(num)
-    #         else:
-    #             s.add(num)
-    #     return s.pop()
+# 异或：两个相同的数异或为0；0和任意数异或都为那个数；异或满足交换律
+	def singleNumbers(self, nums):
+		result = 0
+		for i in range(len(nums)):
+			result ^= nums[i]
+		return result
 
-    def singleNumber(self, nums):
-        res = 0
-        for num in nums:
-            res ^= num
-        return res
+
+
+test = Solution()
+nums = [2, 2, 5, 3, 3]
+print(test.singleNumbers(nums))

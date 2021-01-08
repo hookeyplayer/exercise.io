@@ -73,7 +73,6 @@ class Solution:
 	# 		return -y
 	# 	return y
 
-
 test = Solution()
 x = -20300
 print(test.reverse(x))

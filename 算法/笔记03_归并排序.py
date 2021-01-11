@@ -27,3 +27,26 @@ def quicksort(array):
 		bigger = [i for i in array[1:] if i > pivot] # 分成一小一大左右两组
 		return quicksort(smaller) + [pivot] + quicksort(bigger)
 print(quicksort([8, 3, 5, 1, 2, 9]))
+
+# 算法导论，可以运行，但未测试
+def merge(A, p, q, r):
+	N1 = A[p : q+1]
+	N2 = A[q+1 : r+1]
+	pointer = p
+	while N1 and N2:
+		if N1[0] <= N2[0]:
+			A[pointer] = N1.pop(0)
+		else:
+			A[pointer] = N2.pop(0)
+		pointer += 1
+	tail = N1 if N1 else N2 # 落单的那个
+	for last in tail:
+		A[k] = last
+		pointer += 1
+
+def mergesort(A, p, r):
+	if p < r:
+		mid = (p+r-1) // 2
+		mergesort(A, p, mid)
+		mergesort(A, mid+1, r)
+		merge(A, p, q, r)

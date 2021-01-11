@@ -25,14 +25,15 @@ class Solution(object):
 					maxProfit = diff
 		return maxProfit
 
+
 # 法一：动态规划
 # 法1.1:无额外空间
-
 	def maxProfit(self, prices):
 		if not prices:
 			return 0
 		profit = 0
 		min_element = prices[0]
+		
 		dp = [0]
 		for i in range(1, len(prices)):
 			min_element = min(min_element, prices[i])
@@ -42,7 +43,6 @@ class Solution(object):
 		return profit 
 
 # 法1.2:额外空间跟踪
-
 	def maxProfit(self, prices):
 		if not prices:
 			return 0

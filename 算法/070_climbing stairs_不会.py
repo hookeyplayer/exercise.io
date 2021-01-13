@@ -37,7 +37,7 @@ class Solution(object):
     # 		first = second
     # 		second = current
 
-# 2
+# 2 
     def climbStairs(self, n):
     	if n <= 1:
     		return 1

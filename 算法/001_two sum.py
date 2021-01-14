@@ -1,22 +1,21 @@
-
 # 返回两个索引，使得其对应的值之和等于目标值，且唯一解
 
 class Solution():
-# 法零：brutal force O(n^2)
+# 法一：brutal force O(n^2)
 # 	def twoSum(self, nums, target):
 # 		length = len(nums)
 # 		for i in range(length):
 # 			for j in range(i+1, length):
 # 				if nums[i] + nums[j] == target:
 # 					return [i, j]
-# 法一
-	def twoSum(self, nums, target):
-		if len(nums) == 0:
-			return []
-		for index, num in enumerate(nums):
-			for count in range(index+1, len(nums)):
-				if num + nums[count] == target:
-					return [index, count]
+
+# 	def twoSum(self, nums, target):
+# 		if len(nums) == 0:
+# 			return []
+# 		for index, num in enumerate(nums):
+# 			for count in range(index+1, len(nums)):
+# 				if num + nums[count] == target:
+# 					return [index, count]
 
 # 法二
 	def twoSum(self, nums, target):

@@ -1,14 +1,14 @@
+
 # 返回两个索引，使得其对应的值之和等于目标值，且唯一解
 
-# 法一：brutal force
 class Solution():
-# 法零：
-	def twoSum(self, nums, target):
-		length = len(nums)
-		for i in range(length):
-			for j in range(i+1, length):
-				if nums[i] + nums[j] == target:
-					return [i, j]
+# 法零：brutal force O(n^2)
+# 	def twoSum(self, nums, target):
+# 		length = len(nums)
+# 		for i in range(length):
+# 			for j in range(i+1, length):
+# 				if nums[i] + nums[j] == target:
+# 					return [i, j]
 # 法一
 	def twoSum(self, nums, target):
 		if len(nums) == 0:
@@ -28,6 +28,13 @@ class Solution():
 				return [hashmap[temp], index]
 			except KeyError:
 				hashmap[num] = index
+				
+# 统计文件行数1
+count = len(open(filepath, 'r').readlines())
+# 统计文件行数2
+count = 0
+for index, line in enumerate(open(filepath, 'r')):
+	count += 1
 
 # 法三：不会
 	def twoSum(self, nums, target):

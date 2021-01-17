@@ -179,3 +179,22 @@ plt.show()
 #         width=edge_width)
 # plt.title("Корреляции цен активов (случайный)", fontdict=font_dict)
 # plt.show()
+#%%
+# =============================================================================
+# 最小生成树 Kruskal's algos
+# =============================================================================
+# 在删除低相关系数低edges之后创建最小生成树
+mst = nx.minimum_spanning_tree(Gx)
+edge_colours = []
+
+# 给edges赋值颜色
+for key, value in nx.get_edge_attributes(mst, 'correlation').items():
+    edge_colours.append(assign_colour(value))
+
+# node size 和 width 赋值 constant
+nx.draw(mst, with_labels=True, pos=nx.fruchterman_reingold_layout(mst),
+        node_size=200, edge_color=edge_colours, width = 1.2)
+
+plt.title("Корреляции цен активов - Минимальное остовное дерево",
+          fontdict=font_dict)
+plt.show()

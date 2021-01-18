@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Fri Jan 15 16:55:54 2021
+Created on Mon Jan 18 10:50:56 2021
 
 @author: xiaofan
 """
+
 import yfinance as yf
 import pandas as pd
 import numpy as np
@@ -18,46 +19,38 @@ import math
 # 数据处理
 # =============================================================================
 
-symbols = list(pd.read_excel('msci2017.xlsx')['Symbol'])
-start = '2016-01-01'
-end = '2018-01-01'
-df = yf.download(symbols,start,end)['Adj Close'] # 30 Failed downloads
-df.dropna()
-print(df.shape)
+symbols = list(pd.read_excel('msci2019.xlsx')['Symbol'])
+start = '2019-01-01'
+end = '2021-01-01'
+df2 = yf.download(symbols,start,end)['Adj Close'] # 518, 1339
+df2.dropna()
+print(df2.shape)
 #%%
 # =============================================================================
 # 取对数
 # =============================================================================
 
-logReturns = pd.DataFrame()
-for col in df.columns:
-    logReturns[col] = np.log(df[col]).diff(-1)
-
-# =============================================================================
-# Heat map*
-# =============================================================================
-
-corrMatrix = logReturns.corr()
-print(corrMatrix.head())
-# sns.clustermap(corrMatrix1, cmap="RdYlGn")
-# plt.show()
+logReturns2 = pd.DataFrame()
+for col in df2.columns:
+    logReturns2[col] = np.log(df2[col]).diff(-1)
 
 # =============================================================================
 # edge, nodes准备
 # =============================================================================
 
-edges = corrMatrix.stack().reset_index()
-edges.columns = ['theOne','theOther','correlation']
+corrMatrix2 = logReturns2.corr()
+edges2 = corrMatrix2.stack().reset_index()
+edges2.columns = ['theOne','theOther','correlation']
 # remove self correlations
 # list, 含 pairwise correlation信息
-edges = edges.loc[edges['theOne'] != edges['theOther']].copy()
+edges2 = edges2.loc[edges2['theOne'] != edges2['theOther']].copy()
 # undirected graph with weights corresponding to the correlation magnitude
-G0 = nx.from_pandas_edgelist(edges, 'theOne', 'theOther', edge_attr=['correlation'])
+G2 = nx.from_pandas_edgelist(edges2, 'theOne', 'theOther', edge_attr=['correlation'])
 
-print(nx.info(G0))
-# Number of nodes: 799
-# Number of edges: 318687
-# Average degree: 797.7146
+print(nx.info(G2))
+# Number of nodes: 1333
+# Number of edges: 887403
+# Average degree: 1331.4374
 
 # =============================================================================
 # 原始图
@@ -107,23 +100,23 @@ plt.figure(figsize=(7,7))
 threshold = 0.5
 
 # create a new graph from edge list
-Gx = nx.from_pandas_edgelist(edges, 'theOne', 'theOther',
+Gx2 = nx.from_pandas_edgelist(edges2, 'theOne', 'theOther',
                              edge_attr=['correlation'])
 
 # list to store edges to remove
-remove = []
+remove2 = []
 # loop through edges in Gx and find correlations which are below the threshold
-for theOne, theOther in Gx.edges():
-    corr = Gx[theOne][theOther]['correlation']
+for theOne, theOther in Gx2.edges():
+    corr2 = Gx2[theOne][theOther]['correlation']
     #add to remove node list if abs(corr) < threshold
-    if abs(corr) < threshold:
-        remove.append((theOne, theOther))
+    if abs(corr2) < threshold:
+        remove2.append((theOne, theOther))
 
 # remove edges contained in the remove list
-Gx.remove_edges_from(remove)
+Gx2.remove_edges_from(remove2)
 
-print(str(len(remove)) + " edges removed")
-# 删除了317308条
+print(str(len(remove2)) + " edges removed")
+# 872378 edges removed
 #%%
 
 # =============================================================================
@@ -145,56 +138,58 @@ def assign_node_size(degree, scaling_factor=50):
     return degree * scaling_factor
 
 
-edge_colours = []
-edge_width = []
-for key, value in nx.get_edge_attributes(Gx, 'correlation').items():
-    edge_colours.append(assign_colour(value))
-    edge_width.append(assign_thickness(value))
+edge_colours2 = []
+edge_width2 = []
+for key, value in nx.get_edge_attributes(Gx2, 'correlation').items():
+    edge_colours2.append(assign_colour(value))
+    edge_width2.append(assign_thickness(value))
 
 # 赋值 node size (degree)
-node_size = []
-for key, value in dict(Gx.degree).items():
-    node_size.append(assign_node_size(value))
+node_size2 = []
+for key, value in dict(Gx2.degree).items():
+    node_size2.append(assign_node_size(value))
+    
 #%%
 # 绘图
 sns.set(rc={'figure.figsize': (12, 12)})
 font_dict = {'fontsize': 15}
 
-# nx.draw(Gx, pos=nx.circular_layout(Gx), with_labels=True,
-#         node_size=node_size, edge_color=edge_colours,
-#         width=edge_width)
-# plt.title("Корреляции цен активов (2016.1.1-2018.1.1)", fontdict=font_dict)
+# nx.draw(Gx2, pos=nx.circular_layout(Gx2), with_labels=True,
+#         node_size=node_size2, edge_color=edge_colours2,
+#         width=edge_width2)
+# plt.title("Корреляции цен активов (2019.1.1-2021.1.1)", fontdict=font_dict)
 # plt.show()
 
-# nx.draw(Gx, pos=nx.fruchterman_reingold_layout(Gx), with_labels=True,
-#         node_size=node_size, edge_color=edge_colours,
-#         width = edge_width)
-# plt.title("Корреляции цен активов (2016.1.1-2018.1.1) - Fruchterman-Reingold",
+# nx.draw(Gx2, pos=nx.fruchterman_reingold_layout(Gx2), with_labels=True,
+#         node_size=node_size2, edge_color=edge_colours2,
+#         width = edge_width2)
+# plt.title("Корреляции цен активов (2019.1.1-2021.1.1) - Fruchterman-Reingold",
 #           fontdict=font_dict)
 # plt.show()
 
-# nx.draw(Gx, pos=nx.random_layout(Gx), with_labels=True,
-#         node_size=node_size, edge_color=edge_colours,
-#         width=edge_width)
-# plt.title("Корреляции цен активов (2016.1.1-2018.1.1)", fontdict=font_dict)
+# nx.draw(Gx2, pos=nx.random_layout(Gx2), with_labels=True,
+#         node_size=node_size2, edge_color=edge_colours2,
+#         width=edge_width2)
+# plt.title("Корреляции цен активов (2019.1.1-2021.1.1)", fontdict=font_dict)
 # plt.show()
 #%%
 # =============================================================================
 # 最小生成树 Kruskal's algos
 # =============================================================================
 # 在删除低相关系数低edges之后创建最小生成树
-mst = nx.minimum_spanning_tree(Gx)
-edge_colours = []
+mst2 = nx.minimum_spanning_tree(Gx2)
+edge_colours2 = []
 
 # 给edges赋值颜色
-for key, value in nx.get_edge_attributes(mst, 'correlation').items():
-    edge_colours.append(assign_colour(value))
+for key, value in nx.get_edge_attributes(mst2, 'correlation').items():
+    edge_colours2.append(assign_colour(value))
 
-# # node size 和 width 赋值 constant
-# nx.draw(mst, with_labels=True, pos=nx.fruchterman_reingold_layout(mst),
-#         node_size=200, edge_color=edge_colours, width = 1.2)
-nx.draw(mst, with_labels=True, pos=nx.spectral_layout(mst),
-        node_size=200, edge_color=edge_colours, width = 1.2)
-plt.title("Корреляции цен активов (2016.1.1-2018.1.1) - Минимальное остовное дерево",
+# node size 和 width 赋值 constant
+# nx.draw(mst2, with_labels=True, pos=nx.fruchterman_reingold_layout(mst2),
+#         node_size=200, edge_color=edge_colours2, width = 1.2)
+
+nx.draw(mst2, with_labels=True, pos=nx.spectral_layout(mst2),
+        node_size=200, edge_color=edge_colours2, width = 1.2)
+plt.title("Корреляции цен активов (2019.1.1-2021.1.1) - Минимальное остовное дерево",
           fontdict=font_dict)
 plt.show()

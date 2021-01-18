@@ -18,7 +18,7 @@
 # if __name__ == '__main__':
 #     # begin
 #     s = Solution()
-#     print s.removeElement([1], 1)
+#     print(s.removeElement([1], 1))
 
 # 一个指向前面等于val的数字，一个指向后面不等于val的数字，交换后移动的方式就是交换之后把末尾的指针前移；如果不进行交换操作则把前指针后移
 # 时间复杂度是O(N)，空间复杂度是O(1)

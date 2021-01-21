@@ -41,6 +41,6 @@ def quickSort(arr, left, right):
 		quickSort(arr, left, pivotIndex-1)
 		quickSort(arr, pivotIndex+1, right)
 	return arr
-
+ 
 array = [8, 3, 5, 1, 2, 9]
 print(quickSort(array, 0, 5))

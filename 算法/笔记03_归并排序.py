@@ -1,24 +1,27 @@
-# def merge_sort(A):
-# 	if len(A) <= 1:
-# 		return A
-# 	mid = len(A) // 2
-# 	n1 = merge_sort(A[:mid])
-# 	n2 = merge_sort(A[mid:])
-# 	lpointer = 0
-# 	rpointer = 0
-# 	result = []
-# 	while lpointer < len(n1) and rpointer < len(n2):
-# 		if n1[lpointer] <= n2[rpointer]:
-# 			result.append(n1[lpointer])
-# 			lpointer += 1
-# 		else:
-# 			result.append(n2[rpointer])
-# 			rpointer += 1
-# 	result += n1[lpointer:]
-# 	result += n2[rpointer:]
-# 	return result
+def mergeSort(arr):
+	# 归并
+	def merge(left, right):
+		result = []
+		i = j = 0
+		while i < len(left) and j < len(right):
+			if left[i] <= right[j]:
+				result.append(left[i])
+				i += 1
+			else:
+				result.append(right[j])
+				j += 1
+		result = result + left[i:] + right[j:] # 剩余的元素直接添加至末尾
+		return result
+	# 递归
+	if len(arr) <= 1:
+		return arr
+	mid = len(arr) // 2
+	left = mergeSort(arr[:mid])
+	right = mergeSort(arr[mid:])
+	return merge(left, right)
 
-# 算法导论，可以运行，但未测试
+
+# # 算法导论，可以运行，但未测试
 def merge(A, p, q, r):
 	N1 = A[p : q+1]
 	N2 = A[q+1 : r+1]

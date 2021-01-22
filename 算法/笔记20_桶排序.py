@@ -1,10 +1,11 @@
-# 桶排序是技术排序的升级
+# 桶排序是计数排序的升级，类似于创建统计数组一样创建若干个桶
+# 每个桶代表一个区间范围，里面可以承载一个或多个元素
 # 核心：在于映射函数的确定
 # 任务：尽量增大桶的数量；使用的映射函数能够将输入的N个数据均匀分配到K个桶里
 def bucketSort(arr, defaultBucketSize=5):
 	maxVal, minVal = max(arr), min(arr)
-	bucketSize = defaultBucketSize
-	# 数据分组
+	bucketSize = defaultBucketSize # 区间跨度
+	# 桶的数量
 	bucketCount = (maxVal - minVal) // bucketSize + 1
 	# 二维桶
 	buckets = []
@@ -16,7 +17,7 @@ def bucketSort(arr, defaultBucketSize=5):
 	# 清空arr
 	arr.clear()
 	for bucket in buckets:
-		insertionSort(bucket)
+		insertionSort(bucket) # 桶内元素排序
 		# 排序好的桶依次放入arr中
 		arr.extend(bucket)
 	return arr

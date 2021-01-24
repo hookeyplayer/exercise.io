@@ -1,3 +1,7 @@
+# 读取excel
+import pandas as pd 
+df = pd.read_excel('.xlsx')
+
 # read()到达文件末尾时返回一个空字符串，所以删除字符串末尾空白
 with open('pi_digits.txt') as file_object:
 	contents = file_object.read()
@@ -37,7 +41,6 @@ if birthday in pi_string:
 	print("Your birthday appears in the first million digits of pi!")
 else:
 	print("Your birthday does not appear in the first million digits of pi.")
-
 
 # 写入文件
 filename = 'programming.txt'

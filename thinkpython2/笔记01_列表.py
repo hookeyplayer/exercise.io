@@ -7,6 +7,42 @@ b = ['a', 'b', 'c']
 ans = [i for i in zip(a, b)]
 print(ans) # [(1, 'a'), (3, 'b')]
 
+
+# lambda func 从小到大排序
+foo = [-5,8,0,4,9,-4,-20,-2,8,2,-4]
+a = sorted(foo, key=lambda x:x)
+print(a)
+
+
+# lambda func specific 排序
+# 正数从小到大，负数从大到小
+foo = [-5,8,0,4,9,-4,-20,-2,8,2,-4]
+b = sorted(foo, key=lambda x:(x<0, abs(x)))
+print(b) # [0, 2, 4, 8, 8, 9, -2, -4, -4, -5, -20]
+
+
+# lambda 对 列表嵌套字典 的排序
+foo = [{"name":"zs","age":19},{"name":"ll","age":54}, {"name":"wa","age":17},{"name":"df","age":23}]
+c = sorted(foo, key=lambda x:x['age'], reverse=True) # older to young
+d = sorted(foo, key=lambda x:x['name']) # 姓名从小到大
+
+
+# lambda 对 列表嵌套tuple 的排序
+foo = [('me', 24), ('mum', 51), ('dad', 52)]
+e = sorted(foo, key=lambda x:x[1], reverse=True)
+# [('dad', 52), ('mum', 51), ('me', 24)]
+f = sorted(foo, key=lambda x:x[0], reverse=False)
+# [('dad', 52), ('me', 24), ('mum', 51)]
+
+
+# lambda 对 列表嵌套列表 的排序，当年龄相同则添加参数按字母排序
+foo = [['me', 25], ['she', 25], ['he', 26]]
+g = sorted(foo, key = lambda x:(x[1], x[0]))
+print(g) # [['me', 25], ['she', 25], ['he', 26]]
+h = sorted(foo, key = lambda x:(x[0]))
+print(h) # [['he', 26], ['me', 25], ['she', 25]]
+
+
 a = (1, 'a')
 b = (2, 'b')
 anss = [i for i in zip(a, b)]

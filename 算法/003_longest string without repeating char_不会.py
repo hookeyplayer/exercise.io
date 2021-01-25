@@ -1,6 +1,5 @@
-# given "abcabc", 给出子串的长度3
+# # given "abcabc", 给出子串的长度3
 class Solution(object):
-# 0. DP
     def lengthOfLongestSubstring(self, s):
         exist = [False] * 256
         length = len(s)
@@ -31,6 +30,7 @@ class Solution(object):
             char_map[i] = -1
         length = len(s)
         i = max_len = 0
+        # exists duplicate in current i, j
         for j in range(length): 
             if char_map[ord(s[j])] >= i:
                 i = char_map[ord(s[j])] + 1
@@ -72,3 +72,23 @@ class Solution(object):
                 right += 1
                 res = max(rex, len(char))
         return res
+
+# queue
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        ans = []
+        max = 0
+        for element in s:
+            if len(ans) == 0 or element not in ans:
+                ans.append(element)
+                cur = len(ans)
+                if cur > max:
+                    max = cur
+            else:
+                while ans[0] != element:
+                    ans.remove(ans[0])
+                ans.remove(element)
+                ans.append(element)
+        return max
+
+test = Solution()
+print(test.lengthOfLongestSubstring('abcabc'))

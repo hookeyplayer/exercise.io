@@ -1,4 +1,32 @@
 import re
+# 用100替换98
+a = 'He got 98 scores'
+ans = re.sub(r'\d+', '100', a)
+print(ans)
+
+
+# 过滤英文和整数
+a = "not 404 found 张三 99 深圳"
+l = a.split(' ')
+print(l) #['not', '404', 'found', '张三', '99', '深圳']
+ans = re.findall('\d+|[a-zA-Z]+', a) 
+for i in ans:
+	if i in l:
+		l.remove(i)
+new_str = ' '.join(l)
+print(ans) # ['not', '404', 'found', '99']
+print(new_str) # 张三 深圳
+
+# 过滤小数和英文
+a = "not 404 5.55 found 张三 99 深圳"
+ans2 = re.findall('\d+\.?\d*|[a-aA-Z]+', a) 
+for i in ans2:
+	if i in l:
+		l.remove(i)
+new_str2 = ' '.join(l)
+print(ans2) # ['404', '5.55', '99']
+print(new_str) # 张三 深
+
 
 # 用正则切分字符串输出['info', 'xiaoZhang', '33', 'shandong']
 s="info:xiaoZhang 33 shandong"

@@ -2,6 +2,53 @@
 a = ['苏州', '', '', '南京']
 ans = list(map(lambda x: '无' if x == '' else x, a))
 print(ans) # ['苏州', '无', '无', '南京']
+a = [1, 3]
+b = ['a', 'b', 'c']
+ans = [i for i in zip(a, b)]
+print(ans) # [(1, 'a'), (3, 'b')]
+
+a = (1, 'a')
+b = (2, 'b')
+anss = [i for i in zip(a, b)]
+print(anss) # [(1, 2), ('a', 'b')]
+
+
+# 求出列表所有奇数并构造新列表
+a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+# 1 filter方法
+def fn(a):
+	return a % 2 == 1
+l = filter(fn, a)
+l = [i for i in l]
+print(l)
+
+# 2
+l = [i for i in a if i%2==1]
+print(l)
+
+
+# 合并
+m = [1,5,7,9]
+n = [2,2,6,8]
+m.extend(n)
+print(m)
+m.sort(reverse=False)
+print(m)
+
+
+# 一行代码展开该列表
+a = [[1,2],[3,4],[5,6]]
+# 法1
+x = [j for i in a for j in i]
+print(x) # [1, 2, 3, 4, 5, 6]
+
+# 法2
+import numpy as np 
+y = np.array(a).flatten()
+print(y) #[1 2 3 4 5 6]
+y2 = np.array(a).flatten().tolist()
+print(y2) # [1, 2, 3, 4, 5, 6]
+
 
 # 随机数
 import random

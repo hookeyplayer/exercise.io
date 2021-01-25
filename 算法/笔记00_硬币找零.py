@@ -1,10 +1,6 @@
 # 用最少的硬币找零
 # 1 递归+查表
-# 基本条件：要找的零钱价值和某一种硬币币值一样，即只要一个硬币
-# 若不匹配，则求解“给（原始价值-1美分）找零所需硬币的数量”，或者
-# 求解“给（原始价值-5美分）找零所需硬币的数量”或者
-# 求解“给（原始价值-10美分）找零所需硬币的数量”或者
-# 求解“给（原始价值-25美分）找零所需硬币的数量”
+
 def recDC(coinValueList, change, knownResults):
 	minCoins = change
 	if change in coinValueList:
@@ -27,15 +23,15 @@ print(recDC(coinValueList, change, knownResults))
 
 # 2 dp：从为1美分找零的最优解开始，逐步递加
 # 保证在算法的每一步过程中已知兑换更小数值的最优解
-# def dpMakeChange(coinValueList, change, minCoins):
-# 	for cents in range(change+1):
-# 		coinCount = cents
+def dpMakeChange(coinValueList, change, minCoins):
+	for cents in range(change+1):
+		coinCount = cents
  
-# 		for j in [c for c in coinValueList if c <= cents]:
-# 			if minCoins[cents-j] + 1 < coinCount:
-# 				coinCount = minCoins[cents-j] + 1
-# 		minCoins[cents] = coinCount
-# 	return minCoins[change]
+		for j in [c for c in coinValueList if c <= cents]:
+			if minCoins[cents-j] + 1 < coinCount:
+				coinCount = minCoins[cents-j] + 1
+		minCoins[cents] = coinCount
+	return minCoins[change]
 
 def dpMakeChange(coinValueList, change, minCoins, coinsUsed):
 	for cents in range(change+1):

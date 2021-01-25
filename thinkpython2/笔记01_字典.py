@@ -1,3 +1,16 @@
+# 根据key从小到大排序
+dic = {"name":"zs",
+"age":18,
+"city":"深圳",
+"tel":"1362626627"}
+# 法1
+l = sorted(dic.items(), key=lambda i:i[0], reverse=False)
+print(l) # [('age', 18), ('city', '深圳'), ('name', 'zs'), ('tel', '1362626627')]
+# 法2 dict函数
+print(dict(l))
+# {'age': 18, 'city': '深圳', 'name': 'zs', 'tel': '1362626627'}
+
+
 # 字典的遍历
 favorite_languages = {
 	'Ken': 'Python',

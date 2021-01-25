@@ -1,7 +1,8 @@
-# class ListNode(object):
-#     def __init__(self, val=0, next=None):
-#         self.val = val
-#         self.next = next
+class ListNode(object):
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+        
 class Solution(object):
     def addTwoNumbers(self, l1, l2):
         """
@@ -9,7 +10,7 @@ class Solution(object):
         :type l2: ListNode
         :rtype: ListNode
         """
-        carry = 0
+        carry = 0 # 进位的值
         head = cur = ListNode(0)
         while l1 or l2:
         	val = carry
@@ -25,3 +26,6 @@ class Solution(object):
         if carry > 0:
         	curr.next = ListNode(carry)
         return head.next
+    
+# Input: l1 = [2,4,3], l2 = [5,6,4]
+# Output: [7,0,8]

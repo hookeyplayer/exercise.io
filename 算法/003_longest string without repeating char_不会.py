@@ -40,6 +40,25 @@ class Solution(object):
         
 # 1:hash+双指针法+sliding window
 # O(N)
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        maxLenthAns = []
+        tempAns = []
+        if len(s) == 1:
+            return len(s)
+        for index, char in enumerate(s):
+            if char not in tempAns:
+                tempAns.append(char)
+            else:
+                del_index = tempAns.index(char)
+                del tempAns[:del_index+1]
+                tempAns.append(char)
+
+            if len(maxLenthAns) < len(tempAns):
+                maxLenthAns = tempAns[:]
+        return len(maxLenthAns)
+
+
+    def lengthOfLongestSubstring(self, s: str) -> int:
         left, right = 0, 0
         char_map = {}
         res = 0

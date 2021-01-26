@@ -17,22 +17,27 @@ class Solution(object):
 
     def characterReplacement(self, s: str, k: int) -> int:
         from collections import defaultdict
-        window_count = defaultdict(int) # 统计窗口内每个字符出现过的次数
+        # 统计窗口内每个字符出现过的次数
+        window_count = defaultdict(int) 
         ans = 0
         l, r = 0, 0
         lens = len(s)
-        max_repeat = 0 # 窗口内字符出现最多次的记录
+        # 窗口内出现最多次的字符
+        max_repeat = 0 
+
         while r < lens:
             window_count[s[r]] += 1
             max_repeat = max(max_repeat, window_count[s[r]])
+            # 判断条件
+            while r-l+1-max_repeat > k:
 
-            while r-l+1 > max_repeat+k:
                 window_count[s[l]] -= 1
                 max_repeat = max(max_repeat, window_count[s[l]])
-                l += 1
+                l += 1 
 
-            ans = max(ans, r-l+1)
+            ans = max(ans, r-l+1) 
             r += 1
+
         return ans
 
 test = Solution()

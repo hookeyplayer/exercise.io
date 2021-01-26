@@ -1,5 +1,17 @@
 class Solution:
+# 1 不会
+    def addStrings(self, num1: str, num2: str) -> str:
+    	return str(self._int(num1) + self._int(num2))
+    # str to int
+    def _int(self, num):
+    	ans = 0
+    	cnt = 1
+    	for s in num[::-1]:
+    		ans += cnt * (ord(s) - ord('0'))
+    		cnt *= 10
+    	return ans
 
+# 2
     def addStrings(self, num1: str, num2: str) -> str:
         i, j = len(num1)-1, len(num2)-1
         # carry记录进位

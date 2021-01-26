@@ -21,7 +21,7 @@ class Solution:
 					deck.append([item, current, steps+1])
 
 		return -1
-
+ 
 test = Solution()
 start = "AACCGGTT"
 end = "AAACGGTA"

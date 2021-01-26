@@ -4,20 +4,18 @@ from typing import List
 class Solution:
 # # 双指针,快排+三向切分
     def sortColors(self, nums: List[int]) -> None:
-        """
-        Do not return anything, modify nums in-place instead.
-        """
-        zero = 0 # 第一个1的位置
+        zero = 0 # zero代表0的右边界，nums[zero] != 0, nums[zero-1] = 0
         two = len(nums) - 1
         i = 0
-        while i <= two:
-            if nums[i] == 0: # i遇到0就换到左边去
-                nums[zero] = nums[i]
-                # nums[zero], nums[i] = nums[i], nums[zero]
+        while i <= two: # two代表2的边界
+            if nums[i] == 0: 
+                nums[zero], nums[i] = nums[i], nums[zero]
                 i += 1
                 zero += 1
+                
             elif nums[i] == 1: # 遇到1跳过
                 i += 1
+
             elif nums[i] == 2: # i遇到2就换到右边去
                 nums[two] = nums[i] # two记录第一个非2的位置
                 nums[two], nums[i] = nums[i], nums[two]
@@ -49,4 +47,4 @@ class Solution:
     			nums[i] = 2
     			
 # Input: [2,0,2,1,1,0]
-# Output: [0,0,1,1,2,2]    
+# Output: [0,0,1,1,2,2] 

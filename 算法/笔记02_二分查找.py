@@ -1,3 +1,4 @@
+# 一维数组
 # 列表需要已经sorted
 def binary_search(list, item):
 	low = 0
@@ -15,3 +16,20 @@ def binary_search(list, item):
 
 my_list = [1, 3, 5, 7, 9]
 print(binary_search(my_list, 3))
+
+# 二维数组
+class Solution():
+	def find(self, target, array):
+		rows = len(array) - 1
+		cols = len(array[0]) - 1
+		i = rows
+		j = 0
+		# 左下角出发
+		while j < cols and i >= 0:
+			if target < array[i][j]:
+				i -= 1
+			elif target > array[i][j]:
+				j += 1
+			else:
+				return True
+		return False

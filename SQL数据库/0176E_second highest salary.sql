@@ -33,3 +33,7 @@ FROM (
 SELECT Salary, ROW_NUMBER() OVER(ORDER BY Salary DESC) AS rnk FROM Employee
 ) AS tmp
 
+
+-- 其他
+-- 查询最高（子查询）
+-- SELECT name, id FROM Employee WHERE Salary=(SELECT MAX(Salary) FROM Employee);

@@ -140,7 +140,7 @@ ORDER BY population DESC;
 -- Find property theft crime rates per thousand residents in cities with 500,000
 -- or more people
 SELECT
-    city,
+    city, 
     st,
     population,
     property_crime,

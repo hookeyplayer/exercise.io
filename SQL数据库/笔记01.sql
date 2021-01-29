@@ -29,6 +29,7 @@ SELECT DISTINCT school, salary
 FROM teachers;
 
 -- 降序排列工资
+-- 默认order by 升序
 SELECT first_name, last_name, salary
 FROM teachers
 ORDER BY salary DESC;

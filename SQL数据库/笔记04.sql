@@ -121,7 +121,7 @@ WITH q AS
     WHERE VAL IS NOT NULL
      ORDER BY 1
 ),
-cnt AS
+cnt AS 
 (
 	SELECT COUNT(*) AS c FROM q
 )

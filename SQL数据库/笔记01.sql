@@ -60,3 +60,7 @@ SELECT *
 FROM teachers
 WHERE school = 'F.D. Roosevelt HS'
     AND (salary < 38000 OR salary > 40000);
+    
+
+-- 删除表
+DROP TABLE teache;

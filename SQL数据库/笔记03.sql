@@ -141,6 +141,7 @@ WITH (FORMAT CSV, HEADER);
 -- 借助temp表，导入文件时添加default值
 -- 首先删除表中数据
 DELETE FROM supervisor_salaries;
+
 -- 再创建temp表
 CREATE TEMPORARY TABLE supervisor_salaries_temp (
 	LIKE supervisor_salaries);
@@ -158,6 +159,8 @@ INSERT INTO supervisor_salaries (
 	county,
 	supervisor,
 	salary) 
+	
+	
 -- 用select直接query表
 -- 第2列不用列明，而是specify string inside single quotes
 SELECT town, 'Some County', supervisor, salary

@@ -53,6 +53,7 @@ SELECT
     timestamp_column - interval_column AS new_date
 FROM date_time_types;
 
+
 -- 使用cast函数的第一种：variable-length character column=10
 SELECT
     timestamp_column,
@@ -64,8 +65,9 @@ SELECT
     numeric_column,
     CAST(numeric_column AS integer),
     CAST(numeric_column AS varchar(6))
-FROM number_data_types;
-
+FROM number_data_types;				   
+				   
+				   
 -- 只在PostgreSQL里存在快捷双引号的使用，在列名称和type之间截取
 SELECT
     timestamp_column,

@@ -300,4 +300,143 @@ select cno from score group by cno having count(*)>2;
 +-------+
 select tname from teacher where tno=(select tno from course where cno=(select cno from score group by cno having count(*)>2));
 
+-- 查成绩比该课程平均成绩低的学生的成绩表
+-- 先查每门课平均成绩
+select * from score;
++-----+-------+--------+    +-----+-------+--------+
+| sno | cno   | degree |    | sno | cno   | degree |
++-----+-------+--------+    +-----+-------+--------+
+| 100 | 4-185 |    100 |    | 100 | 4-185 |    100 |
+| 101 | 3-105 |    100 |    | 101 | 3-105 |    100 |
+| 102 | 2-105 |     90 |    | 102 | 2-105 |     90 |
+| 103 | 4-185 |     89 |    | 103 | 4-185 |     89 |
+| 104 | 3-105 |     68 |    | 104 | 3-105 |     68 |
+| 105 | 6-247 |     86 |    | 105 | 6-247 |     86 |
+| 106 | 2-105 |     98 |    | 106 | 2-105 |     98 |
+| 107 | 6-247 |     88 |    | 107 | 6-247 |     88 |
+| 108 | 3-105 |     88 |    | 108 | 3-105 |     88 |
++-----+-------+--------+    +-----+-------+--------+
+select * from score a where degree < (select avg(degree) from score b where a.cno=b.cno);
++-----+-------+--------+
+| sno | cno   | degree |
++-----+-------+--------+
+| 102 | 2-105 |     90 |
+| 103 | 4-185 |     89 |
+| 104 | 3-105 |     68 |
+| 105 | 6-247 |     86 |
++-----+-------+--------+
 
+-- 查询安排了课的老师
+select tname, depart from teacher where tno in (select tno from course);
++---------+-------------+
+| tname   | depart      |
++---------+-------------+
+| Tooold  | Arts        |
+| Toogood | Physics     |
+| Tooold  | Maths       |
+| Toogood | Engineering |
++---------+-------------+
+
+-- 查询至少两男生的班号
+select class from student where ssex='B' group by class having count(*)>1;
++-------+
+| class |
++-------+
+| 95031 |
+| 95033 |
++-------+
+
+-- 名字不是C开头的学生
+select * from student where sname not like 'C%';
+
+-- 查询每个学生年龄
+select sname, year(now())-year(sbirthday) as Age from student;
++--------+------+
+| sname  | Age  |
++--------+------+
+| Rachel |   27 |
+| Sophie |   28 |
+| Lily   |   28 |
+| Sandy  |   23 |
+| Jerry  |   24 |
+| Cherry |   29 |
+| Cash   |   22 |
+| Bank   |   23 |
+| Anber  |   24 |
++--------+------+
+
+-- 男教师所上的课程
+select * from course where tno in (select tno from teacher where tsex='B');
++-------+-----------------+-----+
+| cno   | cname           | tno |
++-------+-----------------+-----+
+| 4-185 | Intro to Solar  | 802 |
+| 3-105 | Intro to Python | 804 |
++-------+-----------------+-----+
+
+
+create table grade(
+low int(3),
+upp int (3),
+grade char(1)
+);
+
+insert into grade values(90, 100, 'A');
+insert into grade values(80, 90, 'B');
+insert into grade values(70, 80, 'C');
+insert into grade values(60, 70, 'D');
+
+-- 查询等级
+select sno, cno, grade from score, grade where degree between low and upp;
++-----+-------+-------+
+| sno | cno   | grade |
++-----+-------+-------+
+| 100 | 4-185 | A     |
+| 101 | 3-105 | A     |
+| 102 | 2-105 | A     |
+| 102 | 2-105 | B     |
+| 103 | 4-185 | B     |
+| 104 | 3-105 | D     |
+| 105 | 6-247 | B     |
+| 106 | 2-105 | A     |
+| 107 | 6-247 | B     |
+| 108 | 3-105 | B     |
++-----+-------+-------+
+
+-- 至少：any
+select * from score
+where cno='2-105'
+and degree > any(select degree from score where cno='4-185')
+order by degree desc;
++-----+-------+--------+
+| sno | cno   | degree |
++-----+-------+--------+
+| 106 | 2-105 |     98 |
+| 102 | 2-105 |     90 |
++-----+-------+--------+
+
+-- 且
+select * from score
+where cno='3-105'
+and degree > all(select degree from score where cno='2-105')
+order by degree desc;
++-----+-------+--------+
+| sno | cno   | degree |
++-----+-------+--------+
+| 101 | 3-105 |    100 |
++-----+-------+--------+
+
+-- 查女教师女学生的信息
+select sname as name, ssex as sex, sbirthday as birthday from student where ssex='G'
+union
+select tname, tsex, tbirthday from teacher where tsex='G';
++--------+-----+---------------------+
+| name   | sex | birthday            |
++--------+-----+---------------------+
+| Sophie | G   | 1993-09-01 00:00:00 |
+| Lily   | G   | 1993-03-01 00:00:00 |
+| Cherry | G   | 1992-09-01 00:00:00 |
+| Anber  | G   | 1997-09-01 00:00:00 |
+| Tooold | G   | 1959-04-01 00:00:00 |
+| Tooold | G   | 1969-08-01 00:00:00 |
++--------+-----+---------------------+

@@ -17,4 +17,4 @@ DELETE FROM Person
 WHERE Id IN
 (SELECT a.Id FROM (SELECT * FROM Person) AS a
  INNER JOIN (SELECT * FROM Person) AS b
- ON a.Id > b.Id AND a.Email = b.Email);
+ ON a.Id > b.Id AND a.Email = b.Email); 

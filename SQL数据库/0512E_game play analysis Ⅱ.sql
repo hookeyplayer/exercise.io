@@ -10,13 +10,6 @@ ON a.player_id = b.player_id
 AND a.event_date = b.first_login
 ORDER BY a.player_id;
 
--- 前一题
--- 查询每个用户首次登陆的日期
--- SELECT player_id, MIN(event_date) AS first_login FROM Activity
--- GROUP BY player_id
--- ORDER BY player_id;
-
-
 -- 窗口函数
 SELECT player_id, device_id FROM (
     SELECT player_id, device_id, 

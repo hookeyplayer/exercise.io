@@ -32,7 +32,7 @@ SELECT MAX(CASE WHEN rnk = 2 THEN Salary ELSE null END) AS SecondHighestSalary
 FROM (
 SELECT Salary, ROW_NUMBER() OVER(ORDER BY Salary DESC) AS rnk FROM Employee
 ) AS tmp
-
+ 
 
 -- 其他
 -- 查询最高（子查询）

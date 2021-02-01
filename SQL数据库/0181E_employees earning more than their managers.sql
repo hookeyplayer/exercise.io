@@ -6,7 +6,6 @@ JOIN Employee AS b
 ON a.ManagerId = b.Id
 WHERE a.Salary > b.Salary;
 
-
 -- 法二
 SELECT a.Name AS 'Employee'
 FROM Employee AS a, Employee AS b

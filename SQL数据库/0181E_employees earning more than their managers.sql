@@ -1,6 +1,5 @@
 -- 查出薪水比其经理薪水高的员工姓名
-
--- 自联结 法一
+-- 法一
 SELECT a.Name AS 'Employee' FROM Employee AS a
 JOIN Employee AS b
 ON a.ManagerId = b.Id

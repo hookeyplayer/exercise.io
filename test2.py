@@ -14,14 +14,13 @@ import networkx as nx
 import seaborn as sns
 import math
 #%%
-
 # =============================================================================
 # 数据处理
 # =============================================================================
 
 symbols = list(pd.read_excel('msci2019.xlsx')['Symbol'])
 start = '2019-01-01'
-end = '2021-01-01'
+end = '2021-02-12'
 df2 = yf.download(symbols,start,end)['Adj Close'] # 518, 1339
 df2.dropna()
 print(df2.shape)
@@ -48,9 +47,22 @@ edges2 = edges2.loc[edges2['theOne'] != edges2['theOther']].copy()
 G2 = nx.from_pandas_edgelist(edges2, 'theOne', 'theOther', edge_attr=['correlation'])
 
 print(nx.info(G2))
-# Number of nodes: 1333
-# Number of edges: 887403
-# Average degree: 1331.4374
+#%%
+
+def get_density(G):
+    # How many possible edges?
+    possible_edges = len(G.nodes) * (len(G.nodes) - 1) / 2
+    actual_edges = len(G.edges)
+    return actual_edges/possible_edges
+
+print(get_density(G2)) 
+print(nx.node_connectivity(G2)) 
+clustering_coeffs = nx.clustering(G2).values()
+average_clustering_coeff = sum(clustering_coeffs)/len(clustering_coeffs)
+print(average_clustering_coeff) 
+print(nx.diameter(G2))
+#%%
+
 
 # =============================================================================
 # 原始图
@@ -79,20 +91,6 @@ plt.figure(figsize=(7,7))
 # plt.show()
 
 # =============================================================================
-# 非系统风险的相关问题
-# =============================================================================
-    
-# (1)which assets show strong/meaningful correlations (i.e. >0.5) with each other?
-
-# (2)are these correlations positive or negative?
-
-# (3)which are the most/least ‘connected’ assets?
-# (i.e. which assets share the most/least strong correlations with others)
-
-# (4)which groups of assets behave similarly?
-# (i.e. which assets are correlated with the same type of other assets)
-
-# =============================================================================
 # 对原始图的优化--threshold 
 # =============================================================================
 
@@ -116,9 +114,8 @@ for theOne, theOther in Gx2.edges():
 Gx2.remove_edges_from(remove2)
 
 print(str(len(remove2)) + " edges removed")
-# 872378 edges removed
-#%%
 
+#%%
 # =============================================================================
 # improved graph 2--node(颜色+degree)，edge粗细
 # =============================================================================
@@ -154,18 +151,17 @@ for key, value in dict(Gx2.degree).items():
 sns.set(rc={'figure.figsize': (12, 12)})
 font_dict = {'fontsize': 15}
 
-# nx.draw(Gx2, pos=nx.circular_layout(Gx2), with_labels=True,
-#         node_size=node_size2, edge_color=edge_colours2,
-#         width=edge_width2)
-# plt.title("Корреляции цен активов (2019.1.1-2021.1.1)", fontdict=font_dict)
-# plt.show()
+nx.draw(Gx2, pos=nx.circular_layout(Gx2), with_labels=True,
+        node_size=node_size2, edge_color=edge_colours2,
+        width=edge_width2)
+plt.title("Корреляции цен активов (2019.1.1-2021.2.1) Круговая схема, после удаления 872789 (98,65%) рёбра, корреляция < 0,5", fontdict=font_dict)
+plt.show()
 
-# nx.draw(Gx2, pos=nx.fruchterman_reingold_layout(Gx2), with_labels=True,
-#         node_size=node_size2, edge_color=edge_colours2,
-#         width = edge_width2)
-# plt.title("Корреляции цен активов (2019.1.1-2021.1.1) - Fruchterman-Reingold",
-#           fontdict=font_dict)
-# plt.show()
+nx.draw(Gx2, pos=nx.fruchterman_reingold_layout(Gx2), with_labels=True,
+        node_size=node_size2, edge_color=edge_colours2,
+        width = edge_width2)
+plt.title("Корреляции цен активов (2019.1.1-2021.2.1) Fruchterman-Reingold, после удаления 872789 (98,65%) рёбра, корреляция < 0,5",fontdict=font_dict)
+plt.show()
 
 # nx.draw(Gx2, pos=nx.random_layout(Gx2), with_labels=True,
 #         node_size=node_size2, edge_color=edge_colours2,
@@ -190,6 +186,433 @@ for key, value in nx.get_edge_attributes(mst2, 'correlation').items():
 
 nx.draw(mst2, with_labels=True, pos=nx.spectral_layout(mst2),
         node_size=200, edge_color=edge_colours2, width = 1.2)
-plt.title("Корреляции цен активов (2019.1.1-2021.1.1) - Минимальное остовное дерево",
+plt.title("Корреляции цен активов (2019.1.1-2021.2.1) - Минимальное остовное дерево",
           fontdict=font_dict)
 plt.show()
+
+#%%
+# Define find_nodes_with_highest_deg_cent()
+def find_nodes_with_highest_deg_cent(G):
+
+    deg_cent = nx.degree_centrality(G)
+    # Compute the maximum degree centrality: max_dc
+    max_1_dc = max(list(deg_cent.values()))
+    max_2_dc = list(sorted(deg_cent.values()))[-2]
+    max_3_dc = list(sorted(deg_cent.values()))[-3]
+    max_4_dc = list(sorted(deg_cent.values()))[-4]
+    max_5_dc = list(sorted(deg_cent.values()))[-5]
+    max_6_dc = list(sorted(deg_cent.values()))[-6]
+    max_7_dc = list(sorted(deg_cent.values()))[-7]
+    max_8_dc = list(sorted(deg_cent.values()))[-8]
+    max_9_dc = list(sorted(deg_cent.values()))[-9]
+    max_10_dc = list(sorted(deg_cent.values()))[-10]
+    max_11_dc = list(sorted(deg_cent.values()))[-11] 
+    max_12_dc = list(sorted(deg_cent.values()))[-12]
+    max_13_dc = list(sorted(deg_cent.values()))[-13] 
+    max_14_dc = list(sorted(deg_cent.values()))[-14]
+    max_15_dc = list(sorted(deg_cent.values()))[-15] 
+    max_16_dc = list(sorted(deg_cent.values()))[-16]
+    max_17_dc = list(sorted(deg_cent.values()))[-17] 
+    max_18_dc = list(sorted(deg_cent.values()))[-18] 
+    max_19_dc = list(sorted(deg_cent.values()))[-19]
+    max_20_dc = list(sorted(deg_cent.values()))[-20]
+    maxnode1 = set()
+    maxnode2 = set()
+    maxnode3 = set()
+    maxnode4 = set()
+    maxnode5 = set()
+    maxnode6 = set()
+    maxnode7 = set()
+    maxnode8 = set()
+    maxnode9 = set()
+    maxnode10 = set() 
+    maxnode11 = set()
+    maxnode12 = set() 
+    maxnode13 = set()
+    maxnode14 = set() 
+    maxnode15 = set()
+    maxnode16 = set() 
+    maxnode17 = set()
+    maxnode18 = set()
+    maxnode19 = set() 
+    maxnode20 = set()
+    # Iterate over the degree centrality dictionary
+    for k, v in deg_cent.items():
+
+        # Check if the current value has the maximum degree centrality
+        if v == max_1_dc:
+            # Add the current node to the set of nodes
+            maxnode1.add(k)
+        if v == max_2_dc:
+            maxnode2.add(k)
+        if v == max_3_dc:
+            maxnode4.add(k)
+        if v == max_4_dc:
+            maxnode4.add(k)
+        if v == max_5_dc:
+            maxnode5.add(k)
+        if v == max_6_dc:
+            maxnode6.add(k)
+        if v == max_7_dc:
+            maxnode7.add(k)
+        if v == max_8_dc:
+            maxnode8.add(k)
+        if v == max_9_dc:
+            maxnode9.add(k)
+        if v == max_10_dc:
+            maxnode10.add(k)
+        if v == max_11_dc:
+            maxnode11.add(k)
+        if v == max_12_dc:
+            maxnode12.add(k)
+        if v == max_13_dc:
+            maxnode13.add(k)
+        if v == max_14_dc:
+            maxnode14.add(k)
+        if v == max_15_dc:
+            maxnode15.add(k)
+        if v == max_16_dc:
+            maxnode16.add(k)
+        if v == max_17_dc:
+            maxnode17.add(k)
+        if v == max_18_dc:
+            maxnode18.add(k)
+        if v == max_19_dc:
+            maxnode19.add(k)
+        if v == max_20_dc:
+            maxnode20.add(k)
+    return maxnode1,maxnode2,maxnode3,maxnode4,maxnode5,maxnode6,maxnode7,maxnode8,maxnode9,maxnode10,maxnode11,maxnode12,maxnode13,maxnode14,maxnode15,maxnode16,maxnode17,maxnode18,maxnode19,maxnode20
+
+top_deg_dc,top2_deg_dc,top3_deg_dc,top4_deg_dc,top5_deg_dc,top6_deg_dc,top7_deg_dc,top8_deg_dc,top9_deg_dc,top10_deg_dc,top11_deg_dc,top12_deg_dc,top13_deg_dc,top14_deg_dc,top15_deg_dc,top16_deg_dc,top17_deg_dc,top18_deg_dc,top19_deg_dc,top20_deg_dc  = find_nodes_with_highest_deg_cent(Gx2)
+print(top_deg_dc,top2_deg_dc,top3_deg_dc,top4_deg_dc,top5_deg_dc,top6_deg_dc,top7_deg_dc,top8_deg_dc,top9_deg_dc,top10_deg_dc,top11_deg_dc,top12_deg_dc,top13_deg_dc,top14_deg_dc,top15_deg_dc,top16_deg_dc,top17_deg_dc,top18_deg_dc,top19_deg_dc,top20_deg_dc)
+# for node in Gx2.nodes():
+#     print(node, nx.degree_centrality(Gx2)[node])
+
+#%%
+# =============================================================================
+# 2.Eigenvector centrality
+# =============================================================================
+# Define find_nodes_with_highest_deg_cent()
+def find_nodes_with_highest_eig_c(Gx):
+
+    eig_c = nx.eigenvector_centrality(Gx, max_iter=1000)
+    # Compute the maximum degree centrality: max_dc
+    max_1_ec = max(list(eig_c.values()))
+    max_2_ec = list(sorted(eig_c.values()))[-2]
+    max_3_ec = list(sorted(eig_c.values()))[-3]
+    max_4_ec = list(sorted(eig_c.values()))[-4]
+    max_5_ec = list(sorted(eig_c.values()))[-5]
+    max_6_ec = list(sorted(eig_c.values()))[-6]
+    max_7_ec = list(sorted(eig_c.values()))[-7]
+    max_8_ec = list(sorted(eig_c.values()))[-8]
+    max_9_ec = list(sorted(eig_c.values()))[-9]
+    max_10_ec = list(sorted(eig_c.values()))[-10]
+    max_11_ec = list(sorted(eig_c.values()))[-11]
+    max_12_ec = list(sorted(eig_c.values()))[-12]
+    max_13_ec = list(sorted(eig_c.values()))[-13]
+    max_14_ec = list(sorted(eig_c.values()))[-14]
+    max_15_ec = list(sorted(eig_c.values()))[-15]
+    max_16_ec = list(sorted(eig_c.values()))[-16]
+    max_17_ec = list(sorted(eig_c.values()))[-17]
+    max_18_ec = list(sorted(eig_c.values()))[-18]
+    max_19_ec = list(sorted(eig_c.values()))[-19]
+    max_20_ec = list(sorted(eig_c.values()))[-20]
+    maxnode1 = set()
+    maxnode2 = set()
+    maxnode3 = set()
+    maxnode4 = set()
+    maxnode5 = set()
+    maxnode6 = set()
+    maxnode7 = set()
+    maxnode8 = set()
+    maxnode9 = set()
+    maxnode10 = set()
+    maxnode11 = set()
+    maxnode12 = set()
+    maxnode13 = set()
+    maxnode14 = set()
+    maxnode15 = set()
+    maxnode16 = set()
+    maxnode17 = set()
+    maxnode18 = set()
+    maxnode19 = set()
+    maxnode20 = set()
+
+    # Iterate over the degree centrality dictionary
+    for k, v in eig_c.items():
+
+        # Check if the current value has the maximum degree centrality
+        if v == max_1_ec:
+            maxnode1.add(k)
+        if v == max_2_ec:
+            maxnode2.add(k)
+        if v == max_3_ec:
+            maxnode4.add(k)
+        if v == max_4_ec:
+            maxnode4.add(k)
+        if v == max_5_ec:
+            maxnode5.add(k)
+        if v == max_6_ec:
+            maxnode6.add(k)
+        if v == max_7_ec:
+            maxnode7.add(k)
+        if v == max_8_ec:
+            maxnode8.add(k)
+        if v == max_9_ec:
+            maxnode9.add(k)
+        if v == max_10_ec:
+            maxnode10.add(k)
+        if v == max_11_ec:
+            maxnode11.add(k)
+        if v == max_12_ec:
+            maxnode12.add(k)
+        if v == max_13_ec:
+            maxnode13.add(k)
+        if v == max_14_ec:
+            maxnode14.add(k)
+        if v == max_15_ec:
+            maxnode15.add(k)
+        if v == max_16_ec:
+            maxnode16.add(k)
+        if v == max_17_ec:
+            maxnode17.add(k)
+        if v == max_18_ec:
+            maxnode18.add(k)
+        if v == max_19_ec:
+            maxnode19.add(k)
+        if v == max_20_ec:
+            maxnode20.add(k)
+    return maxnode1,maxnode2,maxnode3,maxnode4,maxnode5,maxnode6,maxnode7,maxnode8,maxnode9,maxnode10,maxnode11,maxnode12,maxnode13,maxnode14,maxnode15,maxnode16,maxnode17,maxnode18,maxnode19,maxnode20
+
+top_eig_c,top2_eig_c,top3_eig_c,top4_eig_c,top5_eig_c,top6_eig_c,top7_eig_c,top8_eig_c,top9_eig_c,top10_eig_c,top11_eig_c,top12_eig_c,top13_eig_c,top14_eig_c,top15_eig_c,top16_eig_c,top17_eig_c,top18_eig_c,top19_eig_c,top20_eig_c  = find_nodes_with_highest_eig_c(Gx2)
+print(top_eig_c,top2_eig_c,top3_eig_c,top4_eig_c,top5_eig_c,top6_eig_c,top7_eig_c,top8_eig_c,top9_eig_c,top10_eig_c,top11_eig_c,top12_eig_c,top13_eig_c,top14_eig_c,top15_eig_c,top16_eig_c,top17_eig_c,top18_eig_c,top19_eig_c,top20_eig_c)
+
+#%%
+# =============================================================================
+# 3.Betweenness Centrality
+# =============================================================================
+
+def find_nodes_with_highest_bet_cent(Gx):
+    bet_cent = nx.betweenness_centrality(Gx)
+    max_1_bc = max(list(bet_cent.values()))
+      
+    max_2_bc = list(sorted(bet_cent.values()))[-2]
+    max_3_bc = list(sorted(bet_cent.values()))[-3]
+    max_4_bc = list(sorted(bet_cent.values()))[-4]
+    max_5_bc = list(sorted(bet_cent.values()))[-5]
+    max_6_bc = list(sorted(bet_cent.values()))[-6]
+    max_7_bc = list(sorted(bet_cent.values()))[-7]
+    max_8_bc = list(sorted(bet_cent.values()))[-8]
+    max_9_bc = list(sorted(bet_cent.values()))[-9]
+    max_10_bc = list(sorted(bet_cent.values()))[-10]
+    max_11_bc = list(sorted(bet_cent.values()))[-11]
+    max_12_bc = list(sorted(bet_cent.values()))[-12]
+    max_13_bc = list(sorted(bet_cent.values()))[-13]
+    max_14_bc = list(sorted(bet_cent.values()))[-14]
+    max_15_bc = list(sorted(bet_cent.values()))[-15]
+    max_16_bc = list(sorted(bet_cent.values()))[-16]
+    max_17_bc = list(sorted(bet_cent.values()))[-17]
+    max_18_bc = list(sorted(bet_cent.values()))[-18]
+    max_19_bc = list(sorted(bet_cent.values()))[-19]
+    max_20_bc = list(sorted(bet_cent.values()))[-20]
+    maxnode1 = set()    
+    maxnode2 = set()
+    maxnode3 = set()
+    maxnode4 = set()
+    maxnode5 = set()
+    maxnode6 = set()
+    maxnode7 = set()
+    maxnode8 = set()
+    maxnode9 = set()
+    maxnode10 = set()
+    maxnode11 = set()    
+    maxnode12 = set()
+    maxnode13 = set()
+    maxnode14 = set()
+    maxnode15 = set()
+    maxnode16 = set()
+    maxnode17 = set()
+    maxnode18 = set()
+    maxnode19 = set()
+    maxnode20 = set()
+    # Iterate over the degree centrality dictionary
+    for k, v in bet_cent.items():
+
+        if v == max_1_bc:
+            maxnode1.add(k)
+        if v == max_2_bc:
+            maxnode2.add(k)
+        if v == max_3_bc:
+            maxnode4.add(k)
+        if v == max_4_bc:
+            maxnode4.add(k)
+        if v == max_5_bc:
+            maxnode5.add(k)
+        if v == max_6_bc:
+            maxnode6.add(k)
+        if v == max_7_bc:
+            maxnode7.add(k)
+        if v == max_8_bc:
+            maxnode8.add(k)
+        if v == max_9_bc:
+            maxnode9.add(k)
+        if v == max_10_bc:
+            maxnode10.add(k)
+        if v == max_11_bc:
+            maxnode11.add(k)
+        if v == max_12_bc:
+            maxnode12.add(k)
+        if v == max_13_bc:
+            maxnode13.add(k)
+        if v == max_14_bc:
+            maxnode14.add(k)
+        if v == max_15_bc:
+            maxnode15.add(k)
+        if v == max_16_bc:
+            maxnode16.add(k)
+        if v == max_17_bc:
+            maxnode17.add(k)
+        if v == max_18_bc:
+            maxnode18.add(k)
+        if v == max_19_bc:
+            maxnode19.add(k)
+        if v == max_20_bc:
+            maxnode20.add(k)
+    return maxnode1,maxnode2,maxnode3,maxnode4,maxnode5,maxnode6,maxnode7,maxnode8,maxnode9,maxnode10,maxnode11,maxnode12,maxnode13,maxnode14,maxnode15,maxnode16,maxnode17,maxnode18,maxnode19,maxnode20
+
+top_deg_bc,top2_deg_bc,top3_deg_bc,top4_deg_bc,top5_deg_bc,top6_deg_bc,top7_deg_bc,top8_deg_bc,top9_deg_bc,top10_deg_bc,top11_deg_bc,top12_deg_bc,top13_deg_bc,top14_deg_bc,top15_deg_bc,top16_deg_bc,top17_deg_bc,top18_deg_bc,top19_deg_bc,top20_deg_bc   = find_nodes_with_highest_bet_cent(Gx2)
+print(top_deg_bc,top2_deg_bc,top3_deg_bc,top4_deg_bc,top5_deg_bc,top6_deg_bc,top7_deg_bc,top8_deg_bc,top9_deg_bc,top10_deg_bc,top11_deg_bc,top12_deg_bc,top13_deg_bc,top14_deg_bc,top15_deg_bc,top16_deg_bc,top17_deg_bc,top18_deg_bc,top19_deg_bc,top20_deg_bc)
+
+#%%
+# =============================================================================
+# 4.Closeness centrality
+# =============================================================================
+
+def find_nodes_with_highest_clo_cent(Gx):
+    clo_cent = nx.closeness_centrality(Gx)
+    max_1_cc = max(list(clo_cent.values()))
+    maxnode1 = set()          
+    max_2_cc = list(sorted(clo_cent.values()))[-2]
+    max_3_cc = list(sorted(clo_cent.values()))[-3]
+    max_4_cc = list(sorted(clo_cent.values()))[-4]
+    max_5_cc = list(sorted(clo_cent.values()))[-5]
+    max_6_cc = list(sorted(clo_cent.values()))[-6]
+    max_7_cc = list(sorted(clo_cent.values()))[-7]
+    max_8_cc = list(sorted(clo_cent.values()))[-8]
+    max_9_cc = list(sorted(clo_cent.values()))[-9]
+    max_10_cc = list(sorted(clo_cent.values()))[-10] 
+    max_11_cc = list(sorted(clo_cent.values()))[-11]  
+    max_12_cc = list(sorted(clo_cent.values()))[-12]
+    max_13_cc = list(sorted(clo_cent.values()))[-13]
+    max_14_cc = list(sorted(clo_cent.values()))[-14]
+    max_15_cc = list(sorted(clo_cent.values()))[-15]
+    max_16_cc = list(sorted(clo_cent.values()))[-16]
+    max_17_cc = list(sorted(clo_cent.values()))[-17]
+    max_18_cc = list(sorted(clo_cent.values()))[-18]
+    max_19_cc = list(sorted(clo_cent.values()))[-19]
+    max_20_cc = list(sorted(clo_cent.values()))[-20]
+
+
+    maxnode2 = set()
+    maxnode3 = set()
+    maxnode4 = set()
+    maxnode5 = set()
+    maxnode6 = set()
+    maxnode7 = set()
+    maxnode8 = set()
+    maxnode9 = set()
+    maxnode10 = set() 
+    maxnode11 = set() 
+    maxnode12 = set()
+    maxnode13 = set()
+    maxnode14 = set()
+    maxnode15 = set()
+    maxnode16 = set()
+    maxnode17 = set()
+    maxnode18 = set()
+    maxnode19 = set()
+    maxnode20 = set()
+
+    for k, v in clo_cent.items():
+
+        if v == max_1_cc:
+            maxnode1.add(k)
+        if v == max_2_cc:
+            maxnode2.add(k)
+        if v == max_3_cc:
+            maxnode4.add(k)
+        if v == max_4_cc:
+            maxnode4.add(k)
+        if v == max_5_cc:
+            maxnode5.add(k)
+        if v == max_6_cc:
+            maxnode6.add(k)
+        if v == max_7_cc:
+            maxnode7.add(k)
+        if v == max_8_cc:
+            maxnode8.add(k)
+        if v == max_9_cc:
+            maxnode9.add(k)
+        if v == max_10_cc:
+            maxnode10.add(k)
+        if v == max_11_cc:
+            maxnode11.add(k)
+        if v == max_12_cc:
+            maxnode12.add(k)
+        if v == max_13_cc:
+            maxnode13.add(k)
+        if v == max_14_cc:
+            maxnode14.add(k)
+        if v == max_15_cc:
+            maxnode15.add(k)
+        if v == max_16_cc:
+            maxnode16.add(k)
+        if v == max_17_cc:
+            maxnode17.add(k)
+        if v == max_18_cc:
+            maxnode18.add(k)
+        if v == max_19_cc:
+            maxnode19.add(k)
+        if v == max_20_cc:
+            maxnode20.add(k)
+    return maxnode1,maxnode2,maxnode3,maxnode4,maxnode5,maxnode6,maxnode7,maxnode8,maxnode9,maxnode10,maxnode11,maxnode12,maxnode13,maxnode14,maxnode15,maxnode16,maxnode17,maxnode18,maxnode19,maxnode20
+
+top_clo_cc,top2_clo_cc,top3_clo_cc,top4_clo_cc,top5_clo_cc,top6_clo_cc,top7_clo_cc,top8_clo_cc,top9_clo_cc,top10_clo_cc,top11_clo_cc,top12_clo_cc,top13_clo_cc,top14_clo_cc,top15_clo_cc,top16_clo_cc,top17_clo_cc,top18_clo_cc,top19_clo_cc,top20_clo_cc  = find_nodes_with_highest_clo_cent(Gx2)
+print(top_clo_cc,top2_clo_cc,top3_clo_cc,top4_clo_cc,top5_clo_cc,top6_clo_cc,top7_clo_cc,top8_clo_cc,top9_clo_cc,top10_clo_cc,top11_clo_cc,top12_clo_cc,top13_clo_cc,top14_clo_cc,top15_clo_cc,top16_clo_cc,top17_clo_cc,top18_clo_cc,top19_clo_cc,top20_clo_cc)
+
+#%%
+# =============================================================================
+#  Degree Distribution2
+# =============================================================================
+
+# def plot_degree_distribution(G):
+#     degree_sequence = sorted([d for n, d in G.degree()], reverse=True)  # degree sequence
+#     degreeCount = collections.Counter(degree_sequence)
+#     deg, cnt = zip(*degreeCount.items())
+#     fig, ax = plt.subplots()
+#     plt.bar(deg, cnt)
+#     plt.ylabel("Количество") 
+#     plt.xlabel("Степень или валентность вершины")
+
+# plot_degree_distribution(Gx2)
+# plt.title("Распределение степеней (узлов, вершин)(2016.1.1-2019.2.1)",
+#           fontdict=font_dict)
+# plt.show()
+
+#%%
+degree_freq = np.array(nx.degree_histogram(Gx2))
+plt.figure(figsize=(12, 8))
+plt.stem(degree_freq)
+plt.ylabel("Частота(Количество)")
+plt.xlabel("Степень или валентность вершины")
+plt.title("Распределение степеней (узлов, вершин)(2019.1.1-2021.2.1)",
+          fontdict=font_dict)
+plt.show()
+#%%
+
+
+
+
+
+
+

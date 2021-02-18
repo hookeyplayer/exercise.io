@@ -61,6 +61,7 @@ print(wine_dataset['DESCR'])
 X_train,  X_test, y_train, y_test = train_test_split(wine_dataset['data'], 
                                                     wine_dataset['target'],
                                                     random_state=0) # 伪随机数状态设定
+
 print('X_train shape:{}'.format(X_train.shape)) 
 print('X_test shape:{}'.format(X_test.shape)) 
 print('y_train shape:{}'.format(y_train.shape)) 

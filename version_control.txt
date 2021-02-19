@@ -1,3 +1,4 @@
+// Git
 .gitignore内容一行__pycache__/
 git init
 git status
@@ -35,3 +36,18 @@ git init
 git status
 git add .
 git commit -m "Starting over."
+
+
+// Jupyternotebook
+直接在终端can-do-list:
+(1) pip3 install --upgrade pip
+(2) jupyter notebook
+(3) pip install jupyterthemes
+(4) jt -l
+    jt -t solarizedd
+(5) conda install -c conda-forge jupyter_nbextensions_configurator
+(6) pip install ipywidgets
+    jupyter nbextension enable --py widgetsnbextension
+(7) pip install qgrid
+    jupyter nbextension enable --py --sys-prefix qgrid
+

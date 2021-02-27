@@ -21,7 +21,6 @@ benchmark_prices <- getSymbols.yahoo('^GDAXI',
                                     auto.assign=FALSE)[, 4]
 benchmark_prices <- na.omit(benchmark_prices)
 
-
 library(PerformanceAnalytics)
 portfolio_returns_whole <- na.omit(Return.portfolio(portfolio_prices))
 # 处理不知道是否恰当

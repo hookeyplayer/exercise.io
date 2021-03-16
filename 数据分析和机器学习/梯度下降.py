@@ -10,10 +10,9 @@ X = np.hstack((X0, X1))
 # Points y-coordinate
 y = np.array([
 	3, 4, 5, 5, 2, 4, 7, 8, 11, 8, 12,
-	11, 13, 13, 16, 17, 18, 17, 19, 21
-]).reshape(m, 1)
+	11, 13, 13, 16, 17, 18, 17, 19, 21]).reshape(m, 1)
 
-# Learning Rate alpha.
+# 学习率
 alpha = 0.01
 
 def error_function(theta, X, y):

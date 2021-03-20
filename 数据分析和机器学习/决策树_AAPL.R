@@ -23,3 +23,22 @@ charts.PerformanceSummary(strategy)
 
 # 回报、std dev、夏普
 table.AnnualizedReturns(strategy)
+
+# 预测正负знак
+AAPL$ReturnsSign <- ifelse(AAPL$Returns<0, 'Down', 'Up')
+AAPL$ReturnsTmr <- c(AAPL$ReturnsSign[-1], NA)
+
+# 创建因子变量
+AAPL$Weekday <- factor(weekdays(AAPL$Date))
+AAPL$Intraday <- factor(ifelse(AAPL$Close-AAPL$Open, 1, -1))
+AAPL <- AAPL[-c(1, nrow(AAPL)),]
+head(AAPL)
+
+train <- AAPL[1:600,]
+test <- AAPL[-(1:600),]
+
+# 绘制决策树
+simple.tree <- rpart(data=train, 
+                     ReturnsTmr ~ ReturnsSign+Weekday+Intraday,
+                     method='class')
+fancyRpartPlot(simple.tree, sub='simple tree')

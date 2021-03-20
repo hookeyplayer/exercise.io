@@ -42,3 +42,12 @@ simple.tree <- rpart(data=train,
                      ReturnsTmr ~ ReturnsSign+Weekday+Intraday,
                      method='class')
 fancyRpartPlot(simple.tree, sub='simple tree')
+
+Prediction <- as.character(predict(simple.tree, test, type='class'))
+Strategies <- data.frame(rep('Up', nrow(test)), Prediction)
+Strategies <- rbind(c(NA, NA), Strategies[-nrow(Strategies),])
+colnames(Strategies) <- c('Buy&Hold', 'Simple tree strategy')
+head(Strategies)
+
+Strategies <- ifelse(Strategies=='Up', test$Returns, -test$Returns)
+charts.PerformanceSummary(xts(Strategies, order.by=test$Date))

@@ -22,6 +22,9 @@ fit <- aov(data$var1 ~ data$var2 + data$var3, data=data)
 fit
 summary(fit)
 
+# 方差序贯分析
+anova(fit)
+
 # multivariate
 # Null:μ1=μ2=μ3
 data("iris")

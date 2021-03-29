@@ -3,7 +3,7 @@ library(zoo)
 library(PerformanceAnalytics)
 # получение данных ---------------------------------------------------------
 
-# Каждый: Китайский фармацевтический дистрибутор
+# Каждый: Китайский фармацевтический дистрибутор
 stock1 <- "3320.HK" # China Resources Pharmacutical
 stock2 <- '1099.HK' # Sinopharm
 
@@ -83,9 +83,3 @@ plot(norm_crp, type = "l", ylim = c(0, 2), col = 4,
 lines(norm_sinopharm, col = 'black')
 # legend("topleft", c(colnames(yi_adj)[1], colnames(crp_adj)[1]),
 #        lty = 1, col = c("red", "blue"), bty = "o", cex = 1)
-
-
-
-
-
-

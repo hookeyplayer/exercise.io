@@ -1,5 +1,7 @@
 -- wildcard % 或_ 效率慢
 
+where Soundex(cust_contact) = Soundex('Y Lie')
+
 -- 1000/2000都出现
 select prod_name
 from table
@@ -51,5 +53,11 @@ where prod_name regexp '[0-9][0-9][0-9][0-9]'
 -- 只在第一个字符时定位匹配
 where prod_name regexp '^[0-9\\.]'
 
+--拼接
+select Concat(RTrim(vendor_name), '(', vendor_country, ')')
 
+--返回串左边的字符
+left()
 
+--找出串的子串
+Locate()

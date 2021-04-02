@@ -1,3 +1,12 @@
+DayOfWeek()
+DateDiff()
+CurDate()
+CurTime()
+-- 返回日期时间的日期部分
+Date() 
+-- 返回日期时间的时间部分
+Time()
+
 -- 函数的使用，择取特定时间类信息
 SELECT
     date_part('year', '2019-12-01 18:37:12 EST'::timestamptz) AS "year",

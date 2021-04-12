@@ -19,12 +19,12 @@ import collections
 # 数据处理
 # =============================================================================
 
-symbols = list(pd.read_excel('msci2016.xlsx')['Symbol'])
-start = '2015-06-01'
-end = '2016-05-31'
-df = yf.download(symbols,start,end)['Adj Close'] # 30 Failed downloads
+symbols = list(pd.read_excel('msci2019.xlsx')['Symbol'])
+start = '2018-06-01'
+end = '2019-05-31'
+df = yf.download(symbols,start,end)['Adj Close'] 
 df.dropna()
-print(df.shape) # (314, 821)
+print(df.shape) 
 #%%
 # =============================================================================
 # 取对数
@@ -163,13 +163,13 @@ font_dict = {'fontsize': 15}
 nx.draw(Gx, pos=nx.circular_layout(Gx), with_labels=True,
         node_size=node_size, edge_color=edge_colours,
         width=edge_width)
-plt.title("Корреляции цен активов (01.06.2015 -31.05.2016) Круговая схема, после удаления 98,37% (301087) рёбра с |корреляцией| < 0,5", fontdict=font_dict)
+plt.title("Корреляции цен активов (01.06.2018 -31.05.2019) Круговая схема, после удаления 97,49% (538643) рёбра с |корреляцией| < 0,5", fontdict=font_dict)
 plt.show()
 
 nx.draw(Gx, pos=nx.fruchterman_reingold_layout(Gx), with_labels=True,
         node_size=node_size, edge_color=edge_colours,
         width = edge_width)
-plt.title("Корреляции цен активов (01.06.2015 -31.05.2016) - Fruchterman-Reingold, после удаления 98,37% (301087) рёбра с |корреляцией| < 0,5",
+plt.title("Корреляции цен активов (01.06.2018 -31.05.2019) - Fruchterman-Reingold, после удаления 97,49% (538643) рёбра с |корреляцией| < 0,5",
           fontdict=font_dict)
 plt.show()
 
@@ -195,7 +195,7 @@ for key, value in nx.get_edge_attributes(mst, 'correlation').items():
 #         node_size=200, edge_color=edge_colours, width = 1.2)
 nx.draw(mst, with_labels=True, pos=nx.spectral_layout(mst),
         node_size=200, edge_color=edge_colours, width = 1.2)
-plt.title("Корреляции цен активов (01.06.2015 -31.05.2016) - Минимальное остовное дерево",
+plt.title("Корреляции цен активов (01.06.2018 -31.05.2019) - Минимальное остовное дерево",
           fontdict=font_dict)
 plt.show()
 #%%
@@ -632,6 +632,6 @@ plt.figure(figsize=(12, 8))
 plt.stem(degree_freq)
 plt.ylabel("Частота (количество узлов)")
 plt.xlabel("Степень одного узла")
-plt.title("Распределение степеней узла (01.06.2015 -31.05.2016)",
+plt.title("Распределение степеней узла (01.06.2018 -31.05.2019)",
           fontdict=font_dict)
 plt.show()

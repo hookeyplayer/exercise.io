@@ -18,10 +18,10 @@ import math
 # 数据处理
 # =============================================================================
 
-symbols = list(pd.read_excel('msci2019.xlsx')['Symbol'])
-start = '2019-01-01'
-end = '2021-02-12'
-df2 = yf.download(symbols,start,end)['Adj Close'] # 518, 1339
+symbols = list(pd.read_excel('msci2017.xlsx')['Symbol'])
+start = '2016-06-01'
+end = '2017-05-31'
+df2 = yf.download(symbols,start,end)['Adj Close'] # 314,818
 df2.dropna()
 print(df2.shape)
 #%%
@@ -55,12 +55,12 @@ def get_density(G):
     actual_edges = len(G.edges)
     return actual_edges/possible_edges
 
-print(get_density(G2)) 
-print(nx.node_connectivity(G2)) 
+print('density: ', get_density(G2))
+print('node connectivity: ', nx.node_connectivity(G2))
 clustering_coeffs = nx.clustering(G2).values()
 average_clustering_coeff = sum(clustering_coeffs)/len(clustering_coeffs)
-print(average_clustering_coeff) 
-print(nx.diameter(G2))
+print('average clustering: ', average_clustering_coeff) 
+print('diameter: ', nx.diameter(G2))
 #%%
 
 
@@ -68,7 +68,7 @@ print(nx.diameter(G2))
 # 原始图
 # =============================================================================
 
-plt.figure(figsize=(7,7))
+# plt.figure(figsize=(7,7))
 # 1
 # nx.draw(G0, with_labels=True, node_size=200, node_color="#e1575c",
 #         edge_color='#363847',  pos=nx.circular_layout(G0))
@@ -154,19 +154,19 @@ font_dict = {'fontsize': 15}
 nx.draw(Gx2, pos=nx.circular_layout(Gx2), with_labels=True,
         node_size=node_size2, edge_color=edge_colours2,
         width=edge_width2)
-plt.title("Корреляции цен активов (2019.1.1-2021.2.1) Круговая схема, после удаления 872789 (98,65%) рёбра, корреляция < 0,5", fontdict=font_dict)
+plt.title("Корреляции цен активов (01.06.2016-31.05.2017) Круговая схема, после удаления 99,64% (305030) рёбра с |корреляцией| < 0,5", fontdict=font_dict)
 plt.show()
 
 nx.draw(Gx2, pos=nx.fruchterman_reingold_layout(Gx2), with_labels=True,
         node_size=node_size2, edge_color=edge_colours2,
         width = edge_width2)
-plt.title("Корреляции цен активов (2019.1.1-2021.2.1) Fruchterman-Reingold, после удаления 872789 (98,65%) рёбра, корреляция < 0,5",fontdict=font_dict)
+plt.title("Корреляции цен активов (01.06.2016-31.05.2017) Fruchterman-Reingold, после удаления 99,64% (305030) рёбра с |корреляцией| < 0,5",fontdict=font_dict)
 plt.show()
 
 # nx.draw(Gx2, pos=nx.random_layout(Gx2), with_labels=True,
 #         node_size=node_size2, edge_color=edge_colours2,
 #         width=edge_width2)
-# plt.title("Корреляции цен активов (2019.1.1-2021.1.1)", fontdict=font_dict)
+# plt.title("Корреляции цен активов (2019.01.01-2021.03.29)", fontdict=font_dict)
 # plt.show()
 #%%
 # =============================================================================
@@ -186,7 +186,7 @@ for key, value in nx.get_edge_attributes(mst2, 'correlation').items():
 
 nx.draw(mst2, with_labels=True, pos=nx.spectral_layout(mst2),
         node_size=200, edge_color=edge_colours2, width = 1.2)
-plt.title("Корреляции цен активов (2019.1.1-2021.2.1) - Минимальное остовное дерево",
+plt.title("Корреляции цен активов (01.06.2016-31.05.2017) - Минимальное остовное дерево",
           fontdict=font_dict)
 plt.show()
 
@@ -603,16 +603,8 @@ print(top_clo_cc,top2_clo_cc,top3_clo_cc,top4_clo_cc,top5_clo_cc,top6_clo_cc,top
 degree_freq = np.array(nx.degree_histogram(Gx2))
 plt.figure(figsize=(12, 8))
 plt.stem(degree_freq)
-plt.ylabel("Частота(Количество)")
-plt.xlabel("Степень или валентность вершины")
-plt.title("Распределение степеней (узлов, вершин)(2019.1.1-2021.2.1)",
+plt.ylabel("Частота (количество узлов)")
+plt.xlabel("Степень одного узла")
+plt.title("Распределение степеней узла (01.06.2016-31.05.2017)",
           fontdict=font_dict)
 plt.show()
-#%%
-
-
-
-
-
-
-

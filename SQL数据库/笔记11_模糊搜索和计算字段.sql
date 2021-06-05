@@ -8,11 +8,21 @@ from table
 where prod_name regexp '.000'
 order by prod_name;
 
--- or
+-- or 多项搜索
 where prod_name regexp '1000|2000|3000'
+
+--以field开头
+where ... regexp '^field'
+
+--以field结尾
+where ... regexp 'field$'
 
 -- []里定义一组字符
 where prod_name regexp '[123] ton'
+
+-- ge/ie/me
+where ... regexp '[gim]e'
+where ... regexp '[a-h]e'
 
 -- ^ 除这些字符串以外的任何
 where prod_name regexp '[^123] ton'

@@ -1,3 +1,5 @@
+-- 过滤分组：WHERE在数据分组之前过滤行，不是分组的概念。 HAVING在数据分组之后进行过滤。所有WHERE都可以用HAVING替代。
+
 -- 查询在同一日期查看过不止一篇文章的所有用户，并按ID升序排列
 -- Views(article_id, author_id, viewer_id, view_date)
 SELECT DISTINCT viewer_id AS id

@@ -89,6 +89,9 @@ SELECT FROM_UNIXTIME(UNIT_TIMESTAMP('2020-03-21','yyyy-mm-dd'),'yyyymmdd')
 
 -- 3. 日期格式
 DATE_FORMAT(pay_date, '%Y-%m') AS pay_month
+-- 3.1 日期匹配
+WHERE DATE(order_date) BETWEEN '2005-09-01' AND '2005-09-30'
+WHERE YEAR(order_date)=2005 AND MONTH(order_date)=9
 
 -- transactions(id, country, state, amount, trans_date)
 -- 查询每个月和每个国家/地区的交易次数及其总金额，批准的交易次数及其总金额

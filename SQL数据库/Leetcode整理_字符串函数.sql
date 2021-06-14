@@ -58,6 +58,11 @@ SELECT TRIM('  abc   ')
 SELECT LOWER('abSEd')
 SELECT UPPER('abSED')
 
+
+-- 填充
+LPAD(name, 25, '...)
+RPAD()
+
 -- 1.5 不同格式数据转化
 SELECT CAST(A TO string) AS A
 

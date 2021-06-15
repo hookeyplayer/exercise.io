@@ -308,6 +308,20 @@ SELECT
 	FIRST_VALUE(name) OVER(PARTITION BY department ORDER BY cost) AS min_cost_user
 FROM table;
 
+-- 返回最高工资
+SELECT DISTINCT FIRST_VALUE(salary) OVER(ORDER BY salary DESC RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS "HIGHEST"
+FROM employees;
+
+
+-- 按部门的最高工资
+SELECT 
+    DISTINCT department_id, 
+    FIRST_VALUE(salary) OVER(PARTITION BY department_id ORDER BY salary DESC RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS "HIGHEST"
+FROM employees
+WHERE department_id in (10,20)
+ORDER BY department_id;
+
+
 -- traffic表没有主键，所以有重复行可能
 -- traffic(user_id, activity, activity_date)
 -- 假设今天是2019年6月30日，找出90天之内第一次登录 (login) 的日期的用户数

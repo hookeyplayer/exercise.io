@@ -5,6 +5,20 @@
 -- ②——作为运算对象的记录中列的类型必须一致（若不一致，可以使用cast函数来进行转换）
 -- ③——order by子句只能使用一次，放最后
 
+-- Intersect运算找出两个表共有的行
+SELECT sales_rep_id
+FROM s_customer
+INTERSECT
+SELECT id 
+FROM s_emp;
+
+-- MINUS存在于一个表但不存在于另一表中的行
+SELECT id 
+FROM s_emp
+MINUS
+SELECT sales_rep_id
+FROM s_customer;
+
 -- 2个表，赛程 和 运动员
 -- Player(player_id, group_id)
 -- Matches(match_id, first_player, second_player, first_score, second_score)

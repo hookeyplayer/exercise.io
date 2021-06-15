@@ -1,3 +1,30 @@
+-- 减两个月
+SELECT ADD_MONTHS(Systemdate, -2)
+
+-- 显示两个日期之间的月份
+SELECT MONTHS_BETWEEN(a, b)
+
+TO_DATE(checkdate_ 'DD-MON-YYYY')
+
+TO_CHAR(first_check, 'MONTHDD,YYYY')
+TO_CHAR(first_check, 'MONTH')
+TO_CHAR(first_check, 'MON')
+TO_CHAR(first_check, 'MM')
+
+-- 星期几
+TO_CHAR(first_check, 'DAY')
+TO_CHAR(first_check, 'DDTH')
+-- Spelled out
+TO_CHAR(first_check, 'DDSP')
+-- 序数拼写
+TO_CHAR(first_check, 'DDSPTH')
+
+
+-- 最晚和最早的日期
+SELECT GREATEST(second_check, first_check)
+LEAST()
+
+
 -- 1.5 不同格式数据转化
 SELECT CAST(A TO string) AS A
 

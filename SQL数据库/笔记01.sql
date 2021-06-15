@@ -65,3 +65,21 @@ WHERE school = 'F.D. Roosevelt HS'
 
 -- 删除表
 DROP TABLE teache;
+
+-- 拷贝表
+-- 任何行都不能满足的布尔条件。由于没检索到行，所以仅拷贝了表的结构
+CREATE TABLE s_worker
+AS SELECT *
+FROM s_emp
+WHERE 1<>1;
+
+-- 更新表
+UPDATE  s_worker
+SET COLUMN = (
+    SELECT col_name
+    FROM s_worker
+    WHERE condition)
+WHERE col_name = (
+    SELECT col_name
+    FROM s_worker
+    WHERE condition);
